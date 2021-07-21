@@ -1,0 +1,9 @@
+version: 2
+sources:
+  - name: ga_kpi_metrics
+    description: metrics that comes from Google Analytics
+    database: leslunes-raw
+    tables:
+      - name: report_de
+      - name: report_fr
+      - name: report_it
