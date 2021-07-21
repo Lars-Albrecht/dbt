@@ -1,25 +1,37 @@
 SELECT
-  transaction_id AS shopify_order_id
-  ,order_created_at	
-  ,number
-  ,shop_order_reference
-  ,regexp_extract(shop_order_reference, r"[0-9].*") AS order_number
-  ,total_price
-  ,tax_amount
-  ,tax_rate
-  ,financial_status
-  ,gateway
-  ,total_discounts
-  ,code
-  ,discount_value
-  ,discount_type
-  ,shipping_costs
-  ,processing_method
-  ,source
-  ,tags
-  ,note
-  ,shopify_fulfilled_at
-  ,fulfillment_status
-  ,order_updated_at
+  number,
+  shopify_transaction_id,
+  ordered_at_utc,
+  customer_payment,
+  total_discounts,
+  tax_amount,
+  shipping_costs,
+  subtotal,
+  tax_rate,
+  tax_title,
+  code,
+  code_value_type,	
+  code_type,	
+  code_value,	
+  currency,
+  processing_method,
+  gateway,
+  shipping_method,
+  shipping_country,
+  tags,
+  note,
+  financial_status,
+  fulfillment_status,
+  shopify_fulfilled_at,
+  order_cancelled_at,
+  order_updated_at,
+  order_processed_at,
+  order_closed_at,
+  order_number,
+  shop_order_reference,
+  user_id,	
+  customer_id,
+  checkout_id,
+  source
 FROM
   {{ ref('stg_orders_combined') }}

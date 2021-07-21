@@ -8,7 +8,7 @@ SELECT
   total_price AS customer_payment,
   total_discounts,
   tl.value.price AS tax_amount,	
-  total_shipping_price_set.shop_money.amount AS shipping_costs,
+  SAFE_CAST(total_shipping_price_set.shop_money.amount AS FLOAT64) AS shipping_costs,
   ROUND(total_price + total_discounts - SAFE_CAST(total_shipping_price_set.shop_money.amount AS FLOAT64),2) AS subtotal,
   tl.value.rate AS tax_rate,
   tl.value.title As tax_title,
