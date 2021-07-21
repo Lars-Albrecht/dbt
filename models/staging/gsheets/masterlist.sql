@@ -7,14 +7,14 @@ SELECT
   size,	
   fabric,
   gtin_ean,	
-  hs_code	,
+  hs_code,
   product,
   adapted_name,
-  Active_vs__Not_Active AS active_vs_not_active,	
-  Last_FOB____ AS last_fob_euro,
-  Last_FOB__ AS last_fob_dollars,	
-  last_fob_price_date		,
-  name_with_size	,
+  active_vs_not_active,	
+  SAFE_CAST(last_fob_euro AS FLOAT64) AS last_fob_euro,
+  SAFE_CAST(last_fob_dollar AS FLOAT64) AS last_fob_dollar,	
+  last_fob_price_date,
+  name_with_size,
   category	
 FROM `leslunes-raw.products.masterlist` 
 WHERE product_name IS NOT NULL
