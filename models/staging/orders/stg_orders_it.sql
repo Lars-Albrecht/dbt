@@ -36,12 +36,21 @@ FROM {{source('shopify_it', 'orders')}} o
 LEFT JOIN UNNEST(fulfillments) AS f
 LEFT JOIN UNNEST(tax_lines) AS tl
 LEFT JOIN UNNEST(shipping_lines) AS sl
+),
+REFUNDS AS(
+SELECT 
+  transaction_id,	
+  SUM(amount) AS sum_refund_amount,
+  DATE(SPLIT(MAX(created_at),"T")[SAFE_OFFSET(0)]) AS last_refund_at
+FROM {{ ref('stg_refunds_amount_per_order_it') }} 
+GROUP BY transaction_id
 )
 
 SELECT * EXCEPT(row_number, transaction_id, line_item_id)
 FROM ORDERS o
 LEFT JOIN {{ref('stg_coupon_codes_it')}} cc ON  cc.transaction_id  = o.shopify_transaction_id
 LEFT JOIN {{ref('stg_freegift_codes_it')}} sc ON  sc.transaction_id = o.shopify_transaction_id
+LEFT JOIN REFUNDS r ON r.transaction_id = o.shopify_transaction_id
 WHERE row_number = 1
 AND test = false
 ORDER BY number ASC
