@@ -95,17 +95,17 @@ models:
           schema: 'zendesk'
         zenfulfillment:
           schema: 'zenfulfillment'
+      core:
+        schema: 'core'
+        database: 'leslunes-prep'
       marts:
-        core:
-          schema: 'core'
-          database: 'leslunes-rep'
         events:
           schema: 'events'
-          database: 'leslunes-rep'
+          database: 'leslunes-prep'
         marketing:
           inf_marketing:
             schema: 'inf_marketing'
-            database: 'leslunes-rep'
+            database: 'leslunes-prep'
 
 
 
