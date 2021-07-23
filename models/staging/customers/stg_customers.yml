@@ -1,2 +1,30 @@
 version: 2
 
+models:
+  - name: new_cusomers_de
+    description: List of new customers per day (German shop)
+
+  - name: new_cusomers_fr
+    description: List of new customers per day (French shop)
+
+  - name: new_customers_it
+    description: List of new customers per day (Italian shop)
+
+  - name: new_customers_daily_de
+    description: List of new customers per day (German shop)
+
+  - name: new_customers_daily_fr
+    description: List of new customers per day (French shop)
+
+  - name: new_customers_daily_it
+    description: List of new customers per day (Italian shop)
+
+  - name: stg_email_hash_de
+    description: List of emails and their corresponding hash (German shop)
+  
+  - name: stg_email_hash_fr
+    description: List of emails and their corresponding hash (French shop)
+
+  - name: stg_email_hash_it
+    description: List of emails and their corresponding hash (Italian shop)
+
