@@ -153,7 +153,7 @@ FROM final
 SELECT DISTINCT
   f.shopify_transaction_id,	
   TO_BASE64(MD5(UPPER(email))) AS email_hash,
-  f.created_at AS bought_at_utc,
+  f.created_at AS created_at,
   item_title,
     CASE 
     WHEN REGEXP_CONTAINS(item_desc, r"\(SKU: (.*?)\)") 
