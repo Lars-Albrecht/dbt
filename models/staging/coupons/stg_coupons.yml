@@ -1,0 +1,23 @@
+version: 2
+
+models:
+  - name: stg_coupon_codes_de
+    description: List of coupons used in transactions (Germany)
+
+  - name: stg_coupon_codes_fr
+    description: List of coupons used in transactions (France)
+    
+  - name: stg_coupon_codes_it
+    description: List of coupons used in transactions (Italy)
+
+  - name: stg_freegift_codes_de
+    description: List of coupons used in transactions (Germany)
+
+  - name: stg_freegift_codes_fr
+    description: List of coupons used in transactions (France)
+
+  - name: stg_freegift_codes_it
+    description: List of coupons used in transactions (Italy)
+
+  - name: unlooped_all
+    description: All coupons data from Unlooped (leslunes-raw layer)
