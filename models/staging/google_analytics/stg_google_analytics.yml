@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: pageviews_by_product_per_day_de
+    description: List of total page views, group by product
+  
+  - name: pageviews_by_variants_per_day_de
+    description: List of total page views, group by product and variant
+
+  - name: std_report_de
+    description: Sessions analytics from Germany
+
+  - name: std_report_fr
+    description: Sessions analytics from France
+
+  - name: std_report_it
+    description: Sessions analytics from Italy

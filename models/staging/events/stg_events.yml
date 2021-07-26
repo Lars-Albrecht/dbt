@@ -1,3 +1,14 @@
 version: 2
 
+models:
+  - name: orders_satisfaction
+    description: List of orders and the customer experience survey answers from Germany
 
+  - name: stg_order_events
+    description: List of order events from all shops
+    
+  - name: transactions_items_satisfaction
+    description: Transaction data with the customer experience survey answers from Germany
+  
+  - name: transactions_items_satisfaction_returned
+    description: Transaction data with the customer experience survey answers from Germany
