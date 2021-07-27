@@ -10,9 +10,10 @@ SELECT
   tax_rate,
   tax_title,
   sum_refund_amount,
-  code,
+  o.code,
   code_value_type,	
-  code_type,	
+  o.code_type,
+  c.code_type AS code_channel,	
   code_value,	
   currency,
   processing_method,
@@ -36,4 +37,5 @@ SELECT
   checkout_id,
   source
 FROM
-  {{ ref('stg_orders_combined') }}
+  {{ ref('stg_orders_combined') }} O
+LEFT JOIN {{ ref('stg_coupon_types') }} C ON C.code = O.code
