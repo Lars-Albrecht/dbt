@@ -1,2 +1,10 @@
 version: 2
+models:
+  - name: stg_influencer
+
+  - name: stg_marketing_post
+
+  - name: stg_sales_order
+
+  - name: stg_user
 
