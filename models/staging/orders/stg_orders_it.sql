@@ -48,8 +48,8 @@ FROM {{ ref('stg_refunds_amount_per_order_it') }}
 GROUP BY transaction_id
 )
 
-SELECT * EXCEPT(row_number, transaction_id, line_item_id,source_name, created_at),
-
+SELECT * EXCEPT(row_number, transaction_id, line_item_id,source_name, created_at, email_hash),
+o.email_hash,
 CASE WHEN o.ordered_at_utc = c.first_purchase_date THEN 1 ELSE 0 END AS new_customer,
 CASE WHEN o.ordered_at_utc = c.first_purchase_date THEN 0 ELSE 1 END AS returning_customer,
 CASE WHEN source_name = "580111" THEN "web" ELSE source_name END AS source_name,

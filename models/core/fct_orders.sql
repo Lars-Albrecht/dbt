@@ -1,7 +1,10 @@
 SELECT
   number,
-  shopify_transaction_id,
   ordered_at_utc,
+  shopify_transaction_id,
+  email_hash,
+  new_customer,
+  returning_customer,
   customer_payment,
   total_discounts,
   tax_amount,
@@ -22,6 +25,7 @@ SELECT
   shipping_country,
   tags,
   note,
+  source_name,
   last_refund_at,
   financial_status,
   fulfillment_status,
@@ -35,7 +39,7 @@ SELECT
   user_id,	
   customer_id,
   checkout_id,
-  source
+  source 
 FROM
   {{ ref('stg_orders_combined') }} O
 LEFT JOIN {{ ref('stg_coupon_types') }} C ON C.code = O.code
