@@ -29,6 +29,7 @@ SELECT
   processed_at AS order_processed_at,
   closed_at AS order_closed_at,
   order_number,
+  source_name,
   name AS shop_order_reference,
   user_id AS user_id,
   customer.id AS customer_id,
@@ -47,11 +48,17 @@ FROM {{ ref('stg_refunds_amount_per_order_it') }}
 GROUP BY transaction_id
 )
 
-SELECT * EXCEPT(row_number, transaction_id, line_item_id)
+SELECT * EXCEPT(row_number, transaction_id, line_item_id,source_name, created_at),
+
+CASE WHEN o.ordered_at_utc = c.first_purchase_date THEN 1 ELSE 0 END AS new_customer,
+CASE WHEN o.ordered_at_utc = c.first_purchase_date THEN 0 ELSE 1 END AS returning_customer,
+CASE WHEN source_name = "580111" THEN "web" ELSE source_name END AS source_name,
+
 FROM ORDERS o
 LEFT JOIN {{ref('stg_coupon_codes_it')}} cc ON  cc.transaction_id  = o.shopify_transaction_id
 LEFT JOIN {{ref('stg_freegift_codes_it')}} sc ON  sc.transaction_id = o.shopify_transaction_id
 LEFT JOIN REFUNDS r ON r.transaction_id = o.shopify_transaction_id
+LEFT JOIN  {{ ref('stg_first_purchase_it')}} c ON c.email_hash = o.email_hash and o.ordered_at_utc = c.created_at
 WHERE row_number = 1
 AND test = false
 ORDER BY number ASC
