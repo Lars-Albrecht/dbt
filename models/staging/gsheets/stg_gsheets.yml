@@ -1,3 +1,45 @@
 version: 2
 
+models:
+  - name: all_other_suppliers_shipments
+    description:
+
+  - name: fob_cat
+    description:
+  
+  - name: fob_countries_import_duty
+    description:
+
+  - name: fob_countries_transport_mode
+    description: 
+  
+  - name: fob_shipments_tracking_cost
+    description:
+
+  - name: fob_suppliers
+    description:
+
+  - name: ga_geckoboard_fr
+    description: 
+
+  - name: ga_geckoboard_it
+    description:
+
+  - name: masterlist
+    description:
+  
+  - name: size-config
+    description:
+
+  - name: stg_gsheets
+    description:
+
+  - name: streamline_po_data
+    description:
+
+  - name: streamline_shipment_data
+    description:
+
+  - name: values_of_set
+    description:
 
