@@ -4,6 +4,7 @@ SELECT
   row_number() OVER (PARTITION BY o.id ORDER BY updated_at DESC) AS row_number,
   number,
   o.id AS shopify_transaction_id,
+  TO_BASE64(MD5(UPPER(email))) AS email_hash,
   created_at AS ordered_at_utc,
   total_price AS customer_payment,
   total_discounts,
