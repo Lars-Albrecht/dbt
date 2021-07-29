@@ -1,0 +1,27 @@
+version: 2
+models:
+  - name: deals_unique_casted_types_snapshot
+
+  - name: deals_unique_casted_types
+
+  - name: facebook_ads_spend_daily
+
+  - name: facebook_ads_spend_monthly
+
+  - name: facebook_ads_summary
+
+  - name: geckoboard_metrics_combined
+
+  - name: geckoboard_metrics_de
+
+  - name: geckoboard_metrics_fr
+
+  - name: geckoboard_metrics_it
+
+  - name: influencer_post_performance_de
+
+  - name: influencer_post_performance_fr
+
+  - name: influencer_post_performance_it
+
+  - name: influencers

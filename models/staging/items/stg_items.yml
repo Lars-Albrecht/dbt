@@ -1,0 +1,27 @@
+version: 2
+models:
+  - name: de
+
+  - name: fr
+
+  - name: it
+
+  - name: orderitems_shopify_all_shops
+
+  - name: sets_de
+
+  - name: sets_fr
+
+  - name: sets_it
+
+  - name: shipped_by_zenf_daily
+
+  - name: shipped_by_zenf
+
+  - name: shipped_skus_by_zenf_daily
+
+  - name: unique_items_de
+
+  - name: unique_items_fr
+
+  - name: unique_items_it
