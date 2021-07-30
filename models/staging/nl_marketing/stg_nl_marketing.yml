@@ -1,0 +1,29 @@
+version: 2
+models:
+  - name: stg_bounces_fr
+
+  - name: stg_bounces
+
+  - name: stg_clicks_fr
+
+  - name: stg_clicks
+
+  - name: stg_droppings
+
+  - name: stg_openings_fr
+
+  - name: stg_openings
+
+  - name: stg_receivings_fr
+
+  - name: stg_receivings
+
+  - name: stg_spam
+
+  - name: stg_subscription_list
+
+  - name: stg_unsubscribe_list
+
+  - name: stg_unsubscriptions_fr
+
+  - name: stg_unsubscriptions

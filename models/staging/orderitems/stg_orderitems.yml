@@ -1,0 +1,9 @@
+version: 2
+models:
+  - name: stg_orderitems_combined
+
+  - name: stg_orderitems_de
+
+  - name: stg_orderitems_fr
+
+  - name: stg_orderitems_it
