@@ -28,7 +28,7 @@ SELECT
   updated_at AS order_updated_at,
   processed_at AS order_processed_at,
   closed_at AS order_closed_at,
-  dc.value.code AS code,
+  UPPER(dc.value.code) AS code,
   order_number,
   source_name,
   name AS shop_order_reference,
