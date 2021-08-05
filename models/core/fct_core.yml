@@ -3,7 +3,7 @@ models:
   - name: fct_orderitems
   
   - name: fct_orders
-      columns: 
+    columns: 
       - name: customer_payment
         tests:
           - not_null
