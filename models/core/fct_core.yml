@@ -2,8 +2,22 @@ version: 2
 models:
   - name: fct_orderitems
   
-  - name: fct_orders 
- 
+  - name: fct_orders
+    columns: 
+    - name: customer_payment
+      tests:
+        - not_null
+    - name: total_discounts
+      tests:
+        - not_null
+    - name: shipping_costs
+      tests:
+        - not_null
+    - name: subtotal
+      tests:
+        - not_null
+    - name: discount_pct
+
   - name: fct_returns
 
   - name: fct_shipments
