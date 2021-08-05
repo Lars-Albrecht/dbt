@@ -4,21 +4,20 @@ models:
   
   - name: fct_orders
     columns: 
-      - name: customer_payment
+     - name: customer_payment
         tests:
           - not_null
-      - name: total_discounts
+     - name: total_discounts
         tests:
           - not_null
-      - name: shipping_costs
+     - name: shipping_costs
         tests:
           - not_null
-      - name: subtotal
+     - name: subtotal
         tests:
           - not_null
-      - name: discount_pct
-        tests:
-          - not_null
+     - name: discount_pct
+
   - name: fct_returns
 
   - name: fct_shipments
