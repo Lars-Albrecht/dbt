@@ -17,9 +17,7 @@ models:
         tests:
           - not_null
      - name: discount_pct
-        tests:
-          - not_null
-          
+
   - name: fct_returns
 
   - name: fct_shipments
