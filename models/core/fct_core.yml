@@ -1,0 +1,9 @@
+version: 2
+models:
+  - name: fct_orderitems
+  
+  - name: fct_orders 
+ 
+  - name: fct_returns
+
+  - name: fct_shipments
