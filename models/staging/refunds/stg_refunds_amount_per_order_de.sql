@@ -5,6 +5,7 @@ FROM (
     order_id As transaction_id,
     amount,
     created_at,
+    gateway,
     ROW_NUMBER() OVER (PARTITION BY id ORDER BY _sdc_batched_at DESC) AS rn
   FROM
     {{ source('refunds_de', 'transactions') }}
