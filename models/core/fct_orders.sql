@@ -40,4 +40,4 @@ SELECT
   source 
 FROM
   {{ ref('stg_orders_combined') }} O
-LEFT JOIN {{ ref('stg_coupon_types') }} C ON C.code = O.code
+LEFT JOIN {{ ref('stg_coupon_types') }} C ON UPPER(C.code) = UPPER(O.code)
