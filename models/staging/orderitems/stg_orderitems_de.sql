@@ -131,8 +131,8 @@ SELECT
  order_number, 
  
  CASE WHEN sku = "" THEN order_item ELSE sku END AS order_item, 
- order_item AS item_title,
  qty,
+ order_item AS item_title,
  sku AS item_desc,
  
  amount,
