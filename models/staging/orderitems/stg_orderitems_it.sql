@@ -32,6 +32,7 @@ line_items AS(
     li.value.title AS item_title, 
     li.value.id AS line_item_id,
     li.value.price_set.shop_money.amount,
+    li.value.quantity as qty,
     CASE 
       WHEN 
         LOWER(li.value.sku) LIKE '%set%' 
@@ -102,6 +103,7 @@ final AS(
    order_number, 
    
    li.value.title AS order_item, 
+   li.value.quantity AS qty,
    p.value.name AS item_title,	
    p.value.value AS item_desc, 
    
@@ -129,6 +131,7 @@ SELECT
  order_number, 
  
  CASE WHEN sku = "" THEN order_item ELSE sku END AS order_item, 
+ qty,
  order_item AS item_title,
  sku AS item_desc,
  
@@ -160,6 +163,7 @@ SELECT DISTINCT
     THEN REGEXP_EXTRACT(item_desc, r"\(SKU: (.*?)\)") 
     ELSE item_desc END 
   AS sku,
+  qty,
   order_item,
   s.shipping_method,
   s.shipping_country,

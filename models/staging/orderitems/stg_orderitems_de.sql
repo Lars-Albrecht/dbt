@@ -32,6 +32,7 @@ line_items AS(
     li.value.title AS item_title, 
     li.value.id AS line_item_id,
     li.value.price_set.shop_money.amount,
+    li.value.quantity as qty,
     CASE 
       WHEN 
         LOWER(li.value.sku) LIKE '%set%' 
@@ -90,6 +91,7 @@ coupon_codes AS(
     UNNEST(o.discount_applications) AS dapp 
   WHERE dapp.value.type != "script"
 ),
+
 final AS(
   SELECT 
    id AS shopify_transaction_id,
@@ -101,6 +103,7 @@ final AS(
    order_number, 
    
    li.value.title AS order_item, 
+   li.value.quantity as qty,
    p.value.name AS item_title,	
    p.value.value AS item_desc, 
    
@@ -129,6 +132,7 @@ SELECT
  
  CASE WHEN sku = "" THEN order_item ELSE sku END AS order_item, 
  order_item AS item_title,
+ qty,
  sku AS item_desc,
  
  amount,
@@ -159,6 +163,7 @@ SELECT DISTINCT
     THEN REGEXP_EXTRACT(item_desc, r"\(SKU: (.*?)\)") 
     ELSE item_desc END 
   AS sku,
+  qty,
   order_item,
   s.shipping_method,
   s.shipping_country,
