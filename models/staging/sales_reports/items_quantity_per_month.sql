@@ -9,7 +9,7 @@ select DISTINCT(SUBSTR(SAFE_CAST(day AS STRING),1,7)) as day from days
 ") %}
 {%- for col in col_dict.day %}
 SUM(CASE
-    WHEN sales.order_date = '{{col}}' THEN line_items__quantity
+    WHEN sales.order_date = '{{col}}' THEN sales.line_items__quantity
 END
     ) AS `_{{col[0:4]}}_{{col[5:7]}}`
 {%-if not loop.last -%}
