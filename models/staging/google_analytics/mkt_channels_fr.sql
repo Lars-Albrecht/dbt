@@ -8,6 +8,7 @@ SELECT
     pageviews,
     pageviewPerSession,
     avgSessionDuration,	
-    bounceRate
+    bounceRate,
+    conversionRate
 FROM
     `leslunes-raw.ga_kpi_metrics.mkt_channel_performance_fr`

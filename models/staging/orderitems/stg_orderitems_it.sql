@@ -34,10 +34,10 @@ line_items AS(
     li.value.price_set.shop_money.amount,
     CASE 
       WHEN 
-        LOWER(li.value.title) LIKE '%set%' 
-        OR LOWER(li.value.title) LIKE '%duo%' 
-        OR LOWER(li.value.title) LIKE '%trio%' 
-        OR LOWER(li.value.title) LIKE '%bundle%' 
+        LOWER(li.value.sku) LIKE '%set%' 
+        OR LOWER(li.value.sku) LIKE '%duo%' 
+        OR LOWER(li.value.sku) LIKE '%trio%' 
+        OR LOWER(li.value.sku) LIKE '%bundle%'
        THEN 'set'
        ELSE "single_item" END AS item_type,
     email,
