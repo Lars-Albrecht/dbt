@@ -35,11 +35,15 @@ SELECT
     WHEN regexp_contains(product_sku, r'LOU') THEN 'Lou Top'
     WHEN regexp_contains(product_sku, r'BELLE') THEN 'Belle Pants'
     WHEN regexp_contains(product_sku, r'HARPER') THEN 'Harper Socks'
-    WHEN regexp_contains(product_sku, r'HALEY') THEN 'Hayley Bag'
-    
+    WHEN regexp_contains(product_sku, r'HALEY') THEN 'Hayley Bag' 
     WHEN regexp_contains(product_sku, r'APRIL') THEN 'April'
     WHEN regexp_contains(product_sku, r'02-BA-ROB') THEN 'Rob'
-    
+    WHEN regexp_contains(product_sku, r'IVY') THEN 'Ivy'
+    WHEN regexp_contains(product_sku, r'ZOE') THEN 'Zoe' 
+    WHEN regexp_contains(product_sku, r'LEO') THEN 'Leo'
+    WHEN regexp_contains(product_sku, r'CHARLIE') THEN 'Charlie'
+
+
     ELSE product_sku END AS metabase_line_style_name
   , shipping_address_country
   , style
