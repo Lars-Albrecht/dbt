@@ -39,6 +39,7 @@ line_items AS(
         OR LOWER(li.value.title) LIKE '%duo%' 
         OR LOWER(li.value.title) LIKE '%trio%' 
         OR LOWER(li.value.title) LIKE '%bundle%' 
+        OR LOWER(li.value.title) LIKE '%team%'
        THEN 'set'
        ELSE "single_item" END AS item_type,
     email,
@@ -117,7 +118,7 @@ FROM line_items_sets i, unnest(li.value.properties) p
 
 WHERE 
   row_number = 1
-  AND p.value.name not in("ll_fg", "ll_hash","ll_min_total")
+  AND p.value.name not in("ll_fg", "ll_hash","ll_min_total", "_ll_coupon_info")
   
 UNION ALL
 
@@ -144,7 +145,7 @@ SELECT
 FROM line_items li 
 WHERE 
   row_number = 1
-  AND order_item not in("ll_fg", "ll_hash","ll_min_total")
+  AND order_item not in("ll_fg", "ll_hash","ll_min_total", "_ll_coupon_info")
 ), first_purchase_date AS(
 
 SELECT DISTINCT
