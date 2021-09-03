@@ -32,12 +32,14 @@ line_items AS(
     li.value.title AS item_title, 
     li.value.id AS line_item_id,
     li.value.price_set.shop_money.amount,
+    li.value.quantity as qty,
     CASE 
       WHEN 
         LOWER(li.value.title) LIKE '%set%' 
         OR LOWER(li.value.title) LIKE '%duo%' 
         OR LOWER(li.value.title) LIKE '%trio%' 
-        OR LOWER(li.value.title) LIKE '%bundle%' 
+        OR LOWER(li.value.title) LIKE '%bundle%'
+        OR LOWER(li.value.title) LIKE '%team%'
        THEN 'set'
        ELSE "single_item" END AS item_type,
     email,
@@ -102,6 +104,7 @@ final AS(
    order_number, 
    
    li.value.title AS order_item, 
+   li.value.quantity as qty,
    p.value.name AS item_title,	
    p.value.value AS item_desc, 
    
@@ -115,7 +118,7 @@ FROM line_items_sets i, unnest(li.value.properties) p
 
 WHERE 
   row_number = 1
-  AND p.value.name not in("ll_fg", "ll_hash","ll_min_total")
+  AND p.value.name not in("ll_fg", "ll_hash","ll_min_total", "_ll_coupon_info")
   
 UNION ALL
 
@@ -129,6 +132,7 @@ SELECT
  order_number, 
  
  CASE WHEN sku = "" THEN order_item ELSE sku END AS order_item, 
+ qty,
  order_item AS item_title,
  sku AS item_desc,
  
@@ -141,16 +145,16 @@ SELECT
 FROM line_items li 
 WHERE 
   row_number = 1
-  AND order_item not in("ll_fg", "ll_hash","ll_min_total")
+  AND order_item not in("ll_fg", "ll_hash","ll_min_total", "_ll_coupon_info")
 ), first_purchase_date AS(
 
 SELECT DISTINCT
-  TO_BASE64(MD5(UPPER(email))) AS email_hash, created_at,
+  TO_BASE64(MD5(UPPER(email))) AS email_hash,
   MIN(created_At) OVER (PARTITION BY TO_BASE64(MD5(UPPER(email)))) AS first_purchase_date, 
 FROM final
 )
 
-SELECT DISTINCT
+SELECT 
   f.shopify_transaction_id,	
   TO_BASE64(MD5(UPPER(email))) AS email_hash,
   f.created_at AS created_at,
@@ -160,6 +164,7 @@ SELECT DISTINCT
     THEN REGEXP_EXTRACT(item_desc, r"\(SKU: (.*?)\)") 
     ELSE item_desc END 
   AS sku,
+  qty,
   order_item,
   s.shipping_method,
   s.shipping_country,

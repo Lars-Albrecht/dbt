@@ -81,6 +81,8 @@ models:
           schema: 'sales'
         sales_channel:
           schema: 'sales_channel'
+        sales_reports:
+          schema: 'sales_reports'
         scm:
           schema: 'scm'
         shipments:

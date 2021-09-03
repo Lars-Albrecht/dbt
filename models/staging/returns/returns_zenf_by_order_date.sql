@@ -35,11 +35,15 @@ SELECT
     WHEN regexp_contains(product_sku, r'LOU') THEN 'Lou Top'
     WHEN regexp_contains(product_sku, r'BELLE') THEN 'Belle Pants'
     WHEN regexp_contains(product_sku, r'HARPER') THEN 'Harper Socks'
-    WHEN regexp_contains(product_sku, r'HALEY') THEN 'Hayley Bag'
-    
+    WHEN regexp_contains(product_sku, r'HALEY') THEN 'Hayley Bag' 
     WHEN regexp_contains(product_sku, r'APRIL') THEN 'April'
     WHEN regexp_contains(product_sku, r'02-BA-ROB') THEN 'Rob'
-    
+    WHEN regexp_contains(product_sku, r'IVY') THEN 'Ivy'
+    WHEN regexp_contains(product_sku, r'ZOE') THEN 'Zoe' 
+    WHEN regexp_contains(product_sku, r'LEO') THEN 'Leo'
+    WHEN regexp_contains(product_sku, r'CHARLIE') THEN 'Charlie'
+
+
     ELSE product_sku END AS metabase_line_style_name
   , shipping_address_country
   , style
@@ -79,8 +83,8 @@ SELECT
   , sum(eleven) AS late_delivery_wrong_item
   , sum(twelve) AS others
   , sum(one)+sum(two)+sum(three)+sum(four)+sum(five)+sum(six)+sum(seven)+sum(eight)+sum(nine)+sum(ten)+sum(eleven)+sum(twelve) AS all_reasons_count
-FROM `leslunes-prep.returns.unique_returned_items` items
-LEFT JOIN `leslunes-prep.gsheets.size-config` sc on sc.size_ll = size
-LEFT JOIN `leslunes-prep.products.masterlist` pm on UPPER(pm.sku) = UPPER(product_sku)
+FROM `leslunes-prep.dbt_returns.unique_returned_items` items
+LEFT JOIN `leslunes-prep.dbt_gsheets.size-config` sc on sc.size_ll = size
+LEFT JOIN `leslunes-prep.dbt_products.masterlist` pm on UPPER(pm.sku) = UPPER(product_sku)
 LEFT JOIN `leslunes-raw.products.old_skus` os on UPPER(os.sku) = UPPER(product_sku)
 GROUP BY 1,2,3,4,5,6,7,8,9,10,13,14,15,16
