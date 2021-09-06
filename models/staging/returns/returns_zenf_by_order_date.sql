@@ -39,7 +39,7 @@ SELECT
     WHEN regexp_contains(product_sku, r'APRIL') THEN 'April'
     WHEN regexp_contains(product_sku, r'02-BA-ROB') THEN 'Rob'
     WHEN regexp_contains(product_sku, r'IVY') THEN 'Ivy'
-    WHEN regexp_contains(product_sku, r'ZOE') THEN 'Zoe' 
+    WHEN regexp_contains(product_sku, r'ZOE') THEN 'Zoey'
     WHEN regexp_contains(product_sku, r'LEO') THEN 'Leo'
     WHEN regexp_contains(product_sku, r'CHARLIE') THEN 'Charlie'
 
