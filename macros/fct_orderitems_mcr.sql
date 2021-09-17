@@ -1,7 +1,7 @@
 {% macro insert_query_with_param(country) %}
 
 WITH line_items_sets AS(
-  SELECT row_number() OVER (PARTITION BY li.value.id, p.value.value ORDER BY updated_at DESC) AS row_number, 
+  SELECT row_number() OVER (PARTITION BY li.value.id, p.value.name ORDER BY updated_at DESC) AS row_number, 
   id,
   o.created_at,
   o.updated_at,
@@ -52,7 +52,7 @@ line_items AS(
     email,
     tags,
     source_name
-FROM `leslunes-raw`.`shopify_{{country}}`.`orders` o,  
+FROM leslunes-raw.shopify_{{country}}.orders o,  
 UNNEST(line_items) AS li
 WHERE test = False
 ), tax AS (
