@@ -48,7 +48,7 @@ END
       size,
       colour
     FROM
-      `leslunes-prep.dbt_gsheets.masterlist`  
+      `leslunes-prep.dbt_prod_gsheets.masterlist`
       ) AS list
   ON
     orders.line_items__sku=list.sku 

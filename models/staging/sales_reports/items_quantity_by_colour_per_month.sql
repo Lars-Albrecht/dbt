@@ -93,7 +93,7 @@ FROM (
       size,
       colour
     FROM
-      `leslunes-raw.products.masterlist`  #import.products_masterlist
+      `leslunes-prep.dbt_prod_gsheets.masterlist`  #import.products_masterlist
       ) AS list
   ON
     orders.line_items__sku=list.sku
