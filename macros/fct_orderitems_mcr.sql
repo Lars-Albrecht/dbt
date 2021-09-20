@@ -52,11 +52,7 @@ line_items AS(
     email,
     tags,
     source_name
-<<<<<<< HEAD
-FROM `leslunes-raw`.`shopify_{{country}}`.`orders` o,  
-=======
-FROM leslunes-raw.shopify_{{country}}.orders o,  
->>>>>>> a4fe8886af312733fa7fe4442e6ec21f79a255e3
+FROM leslunes-raw.shopify_{{country}}.orders o,
 UNNEST(line_items) AS li
 WHERE test = False
 ), tax AS (
@@ -64,7 +60,7 @@ WHERE test = False
  SELECT 
   distinct 
   id AS shopify_transaction_id ,tx.value.rate AS tax_rate, 
-  FROM `leslunes-raw`.`shopify_{{country}}`.`orders`,
+  FROM leslunes-raw.shopify_{{country}}.orders,
   UNNEST(line_items) AS li,
   UNNEST(li.value.tax_lines) AS tx
  
@@ -75,7 +71,7 @@ SELECT
   sl.value.code AS shipping_method,
   shipping_address.country As shipping_country
 FROM  
-  `leslunes-raw`.`shopify_{{country}}`.`orders` o,
+  leslunes-raw.shopify_{{country}}.orders o,
   UNNEST(shipping_lines) AS sl
 ),
 coupon_codes AS(
@@ -86,7 +82,7 @@ coupon_codes AS(
     dapp.value.value AS code_value,
     dapp.value.code AS code
   FROM  
-    `leslunes-raw`.`shopify_{{country}}`.`orders` o,
+    leslunes-raw.shopify_{{country}}.orders o,
     UNNEST(o.discount_applications) AS dapp 
   WHERE dapp.value.type != "script"
 ),
