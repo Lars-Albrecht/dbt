@@ -1,11 +1,7 @@
 {% macro insert_query_with_param(country) %}
 
 WITH line_items_sets AS(
-<<<<<<< HEAD
-  SELECT row_number() OVER (PARTITION BY li.value.id, p.value.value ORDER BY updated_at DESC) AS row_number, 
-=======
   SELECT row_number() OVER (PARTITION BY li.value.id, p.value.name ORDER BY updated_at DESC) AS row_number, 
->>>>>>> a4fe8886af312733fa7fe4442e6ec21f79a255e3
   id,
   o.created_at,
   o.updated_at,
@@ -14,13 +10,13 @@ WITH line_items_sets AS(
   o.order_number,
   o.name, 
   li.value.id AS line_item_id,
-    li.value.title AS order_item, 
-   li.value.quantity as qty,
+  li.value.title AS order_item, 
+  li.value.quantity as qty,
   "set_item" AS item_type,
   email, 
   tags,
-   p.value.name AS item_title,	
-   p.value.value AS item_desc, 
+  p.value.name AS item_title,	
+  p.value.value AS item_desc, 
    
    CASE WHEN REGEXP_CONTAINS(p.value.name, r"Set") THEN li.value.price_set.shop_money.amount ELSE "0" END AS amount,
   source_name
