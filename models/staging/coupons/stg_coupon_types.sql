@@ -7,7 +7,7 @@ CASE
      WHEN UPPER(influencerfullName) LIKE '%LES LUNES CUSTOMER CARE%' THEN 'CS'
      WHEN UPPER(influencerfullName) LIKE '%LESLUNES NEWSLETTER%' THEN 'NL'
      WHEN UPPER(influencerfullName) LIKE '%LL FR NL%' THEN 'NL_FR'
-     WHEN UPPER(influencerfullName) LIKE '%LesLunes NL FR%' THEN 'NL_FR'
+     WHEN UPPER(influencerfullName) = 'LESLUNES NL FR' THEN 'NL_FR'
      WHEN UPPER(influencerfullName)='FACEBOOK DE' THEN 'FB'
      WHEN UPPER(influencerfullName)='FACEBOOK FR' THEN 'FB_FR'
      WHEN UPPER(influencerfullName)='FACEBOOK IT' THEN 'FB_IT'
