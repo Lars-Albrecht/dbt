@@ -52,11 +52,7 @@ line_items AS(
     email,
     tags,
     source_name
-<<<<<<< HEAD
-FROM `leslunes-raw`.`shopify_{{country}}`.`orders` o,  
-=======
 FROM leslunes-raw.shopify_{{country}}.orders o,  
->>>>>>> a4fe8886af312733fa7fe4442e6ec21f79a255e3
 UNNEST(line_items) AS li
 WHERE test = False
 ), tax AS (
