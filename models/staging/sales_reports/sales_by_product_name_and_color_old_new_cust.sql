@@ -27,12 +27,12 @@ END
       SUBSTR(SAFE_CAST(created_at AS STRING),1,7) AS created_at,
       line_items__sku as line,
       CASE
-        WHEN SUBSTR(REGEXP_EXTRACT(line_items__sku, r'^[A-Z \d\W]+'),-3)='-2-' 
-          THEN SUBSTR(REGEXP_EXTRACT(line_items__sku, r'^[A-Z \d\W]+'),1,LENGTH(REGEXP_EXTRACT(line_items__sku, r'^[A-Z \d\W]+'))-3)
-        WHEN SUBSTR(REGEXP_EXTRACT(line_items__sku, r'^[A-Z \d\W]+'),-1)='-' 
-          THEN SUBSTR(REGEXP_EXTRACT(line_items__sku, r'^[A-Z \d\W]+'),1,LENGTH(REGEXP_EXTRACT(line_items__sku, r'^[A-Z \d\W]+'))-1)
+        WHEN SUBSTR(REGEXP_EXTRACT(line_items__sku, r'^[A-Za-z \d\W]+'),-3)='-2-' 
+          THEN SUBSTR(REGEXP_EXTRACT(line_items__sku, r'^[A-Za-z \d\W]+'),1,LENGTH(REGEXP_EXTRACT(line_items__sku, r'^[A-Za-z \d\W]+'))-3)
+        WHEN SUBSTR(REGEXP_EXTRACT(line_items__sku, r'^[A-Za-z \d\W]+'),-1)='-' 
+          THEN SUBSTR(REGEXP_EXTRACT(line_items__sku, r'^[A-Za-z \d\W]+'),1,LENGTH(REGEXP_EXTRACT(line_items__sku, r'^[A-Za-z \d\W]+'))-1)
       ELSE
-      REGEXP_EXTRACT(line_items__sku, r'^[A-Z \d\W]+')
+      REGEXP_EXTRACT(line_items__sku, r'^[A-Za-z \d\W]+')
     END
       AS line_items__sku
     FROM
