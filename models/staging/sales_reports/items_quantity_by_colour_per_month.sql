@@ -58,7 +58,8 @@ FROM (
         WHEN line_items__sku LIKE '%ZOE%' THEN 'Zoey'
         WHEN line_items__sku LIKE '%LEO%' THEN 'Leo'
         WHEN line_items__sku LIKE '%CHARLIE%' THEN 'Charlie'
-
+        WHEN line_items__sku LIKE '%NOLA%' THEN 'Nola'
+        WHEN line_items__sku LIKE '%ROSIE%' THEN 'Rosie'
       ELSE
       'Other'
     END
