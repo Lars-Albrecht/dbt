@@ -37,7 +37,7 @@ SELECT
   user_id AS user_id,
   customer.id AS customer_id,
   o.checkout_id AS checkout_id,
-FROM {{source(shopify_{{country}}, 'orders')}} o
+FROM {{source(['shopify','_',country]|join, 'orders')}} o
 LEFT JOIN UNNEST(fulfillments) AS f
 LEFT JOIN UNNEST(tax_lines) AS tl
 LEFT JOIN UNNEST(shipping_lines) AS sl
@@ -48,7 +48,7 @@ SELECT
   transaction_id,	
   SUM(amount) AS sum_refund_amount,
   DATE(SPLIT(MAX(created_at),"T")[SAFE_OFFSET(0)]) AS last_refund_at
-FROM {{ ref('stg_refunds_amount_per_order_'{{country}}) }} 
+FROM {{ ref(['stg_refunds_amount_per_order_',country]|join) }} 
 GROUP BY transaction_id
 )
 
@@ -60,7 +60,7 @@ SELECT * EXCEPT(row_number, transaction_id, source_name, created_at, email_hash)
   CASE WHEN source_name = "580111" THEN "web" ELSE source_name END AS source_name
 FROM ORDERS o
 LEFT JOIN REFUNDS r ON r.transaction_id = o.shopify_transaction_id
-LEFT JOIN  {{ ref('stg_first_purchase_de')}} c ON c.email_hash = o.email_hash and o.ordered_at_utc = c.created_at
+LEFT JOIN  {{ ref(['stg_first_purchase_',country]|join)}} c ON c.email_hash = o.email_hash and o.ordered_at_utc = c.created_at
 WHERE row_number = 1
 AND test = false
 ORDER BY number ASC
