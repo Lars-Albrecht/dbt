@@ -10,11 +10,10 @@ SELECT
   created_at AS ordered_at_utc,
   total_price AS customer_payment,
   total_discounts,
-  tl.value.price AS tax_amount,	
+
   SAFE_CAST(total_shipping_price_set.shop_money.amount AS FLOAT64) AS shipping_costs,
   ROUND(total_price + total_discounts - SAFE_CAST(total_shipping_price_set.shop_money.amount AS FLOAT64),2) AS subtotal,
-  tl.value.rate AS tax_rate,
-  tl.value.title As tax_title,
+
   currency,
   test,
   processing_method,
@@ -39,7 +38,7 @@ SELECT
   o.checkout_id AS checkout_id,
 FROM {{source(['shopify','_',country]|join, 'orders')}} o
 LEFT JOIN UNNEST(fulfillments) AS f
-LEFT JOIN UNNEST(tax_lines) AS tl
+
 LEFT JOIN UNNEST(shipping_lines) AS sl
 LEFT JOIN UNNEST(discount_codes) AS dc
 ),
@@ -50,6 +49,15 @@ SELECT
   DATE(SPLIT(MAX(created_at),"T")[SAFE_OFFSET(0)]) AS last_refund_at
 FROM {{ ref(['stg_refunds_amount_per_order_',country]|join) }} 
 GROUP BY transaction_id
+), TAXES AS(
+SELECT 
+  o.id AS transaction_id,		
+  SUM(tl.value.price) AS tax_amount,	
+  AVG(tl.value.rate) AS tax_rate,
+  tl.value.title As tax_title,
+FROM `leslunes-raw`.`shopify_de`.`orders` o
+LEFT JOIN UNNEST(tax_lines) AS tl
+GROUP BY 1,4
 )
 
 
@@ -60,6 +68,7 @@ SELECT * EXCEPT(row_number, transaction_id, source_name, created_at, email_hash)
   CASE WHEN source_name = "580111" THEN "web" ELSE source_name END AS source_name
 FROM ORDERS o
 LEFT JOIN REFUNDS r ON r.transaction_id = o.shopify_transaction_id
+LEFT JOIN TAXES t ON t.transaction_id = o.shopify_transaction_id
 LEFT JOIN  {{ ref(['stg_first_purchase_',country]|join)}} c ON c.email_hash = o.email_hash and o.ordered_at_utc = c.created_at
 WHERE row_number = 1
 AND test = false
