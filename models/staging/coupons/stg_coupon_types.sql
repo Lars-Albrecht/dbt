@@ -11,6 +11,7 @@ CASE
      WHEN UPPER(influencerfullName)='FACEBOOK DE' THEN 'FB'
      WHEN UPPER(influencerfullName)='FACEBOOK FR' THEN 'FB_FR'
      WHEN UPPER(influencerfullName)='FACEBOOK IT' THEN 'FB_IT'
+     WHEN influencerfullName='Google Ads DE' THEN 'GOOGLE_ADS'
      WHEN influencerfullName IS NULL THEN 'UNKNOWN' 
      ELSE 'SMM'
      END AS code_type

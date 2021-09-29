@@ -29,6 +29,8 @@ SELECT
         WHEN UPPER(influencerfullName) = 'FACEBOOK DE' THEN 'FB'
         WHEN UPPER(influencerfullName) = 'FACEBOOK FR' THEN 'FB_FR'
         WHEN UPPER(influencerfullName) = 'FACEBOOK IT' THEN 'FB_IT'
+        WHEN UPPER(influencerfullName) LIKE '%GOOGLE%' THEN 'GOOGLE_ADS'
+        WHEN UPPER(influencerfullName) LIKE '%WUNDERKIND%' THEN 'WUNDERKIND'
         WHEN influencerfullName IS NULL THEN 'UNKNOWN' 
         ELSE 'SMM'
     END AS code_type
