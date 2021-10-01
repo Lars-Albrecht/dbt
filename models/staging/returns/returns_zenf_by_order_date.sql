@@ -42,6 +42,9 @@ SELECT
     WHEN regexp_contains(product_sku, r'ZOE') THEN 'Zoey'
     WHEN regexp_contains(product_sku, r'LEO') THEN 'Leo'
     WHEN regexp_contains(product_sku, r'CHARLIE') THEN 'Charlie'
+    WHEN regexp_contains(product_sku, r'NOLA') THEN 'Nola Sweater'
+    WHEN regexp_contains(product_sku, r'ROSIE') THEN 'Rosie Skirt'
+
 
 
     ELSE product_sku END AS metabase_line_style_name
