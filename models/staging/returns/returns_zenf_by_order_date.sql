@@ -1,52 +1,7 @@
 SELECT
   product_sku
-  , CASE 
-    WHEN regexp_contains(product_sku, r'(set|SET)') THEN product_sku
-    WHEN regexp_contains(product_sku, r'4007') THEN 'High waisted Leggings'
-    WHEN regexp_contains(product_sku, r'07-BA-(LUNA|HWLEG)-(FG|VV|TM|MR)') THEN 'Luna Leggings KN'
-    WHEN regexp_contains(product_sku, r'07-BA-(LUNA|HWLEG)-(DT|CH|RT|HG|DN|BK|LL|EB|LG|WL)') THEN 'Luna Leggings SA'
-    WHEN regexp_contains(product_sku, r'(04-BA-STELLA|WSTELL125|WSTELLA125).*(XSP|XS\/S|S\/M|M\/L|L\/XL|M\/L)') THEN 'Stella Jumpsuit SA DS'
-    WHEN regexp_contains(product_sku, r'04-BA-STELLA-(MR|VV|DQ|CH|TM|DN|FG)-(XS|S|M|L|XL)$') THEN 'Stella Jumpsuit SA SS'
-    WHEN regexp_contains(product_sku, r'STEV') THEN 'Steve Turtleneck SA'
-    WHEN regexp_contains(product_sku, r'03-ALENA-(BK|WH|SGR|FG)') THEN 'Alena UTG DS'
-    WHEN regexp_contains(product_sku, r'ALEN') THEN 'Alena SA DS'
-    WHEN regexp_contains(product_sku, r'GRACE') THEN 'Grace Jumpsuit'
-    WHEN regexp_contains(product_sku, r'LANA') THEN 'Lana Jumpsuit'
-    WHEN regexp_contains(product_sku, r'SOPHIA') THEN 'Sophia Jumpsuit AB'
-    WHEN regexp_contains(product_sku, r'MIA') THEN 'Mia Tshirt'
-    WHEN regexp_contains(product_sku, r'(CHARLT|CHARLOTTE)') THEN 'Charlotte Bodysuit'
-    WHEN regexp_contains(product_sku, r'EMMA') THEN 'Emma Bodysuit'
-    WHEN regexp_contains(product_sku, r'(07|MICHELLE)-EC-(MICHEL-(BK|FD))?((XS|S|M|L|XL)-(FD|BK))?') THEN 'Michelle SJ'
-    WHEN regexp_contains(product_sku, r'(07|MICHELLE)-ECR-(MICHEL-(BK|FD|RR|FG))?((XS|S|M|L|XL)-(FD|BK|RR|FG))?') THEN 'Michelle RIB'
-    WHEN regexp_contains(product_sku, r'OLIVIA') THEN 'Olivia Hairband'
-    WHEN regexp_contains(product_sku, r'ROBIN') THEN 'Robin Jumpsuit'
-    WHEN regexp_contains(product_sku, r'PAULBELT') THEN 'Paul Belt'
-    WHEN regexp_contains(product_sku, r'PAUL') THEN 'Paul Jumpsuit SA'
-    WHEN regexp_contains(product_sku, r'AVA') THEN 'Ava Dress'
-    WHEN regexp_contains(product_sku, r'VALERY') THEN 'Valery Scarf'
-    WHEN regexp_contains(product_sku, r'MILEY') THEN 'Miley Mask'
-    WHEN regexp_contains(product_sku, r'RUBY') THEN 'Ruby Scrunchie'
-    WHEN regexp_contains(product_sku, r'JADE') THEN 'Jade Pants'
-    WHEN regexp_contains(product_sku, r'ABBY') THEN 'Abby Longsleeve'
-    WHEN regexp_contains(product_sku, r'CARA2') THEN 'Cara Jumpsuit DB'
-    WHEN regexp_contains(product_sku, r'CARA') THEN 'Cara Jumpsuit AB'
-    WHEN regexp_contains(product_sku, r'DAISY') THEN 'Daisy Tshirt'
-    WHEN regexp_contains(product_sku, r'LILY') THEN 'Lily Top' 
-    WHEN regexp_contains(product_sku, r'LOU') THEN 'Lou Top'
-    WHEN regexp_contains(product_sku, r'BELLE') THEN 'Belle Pants'
-    WHEN regexp_contains(product_sku, r'HARPER') THEN 'Harper Socks'
-    WHEN regexp_contains(product_sku, r'HALEY') THEN 'Hayley Bag' 
-    WHEN regexp_contains(product_sku, r'APRIL') THEN 'April'
-    WHEN regexp_contains(product_sku, r'02-BA-ROB') THEN 'Rob'
-    WHEN regexp_contains(product_sku, r'IVY') THEN 'Ivy'
-    WHEN regexp_contains(product_sku, r'ZOE') THEN 'Zoey'
-    WHEN regexp_contains(product_sku, r'LEO') THEN 'Leo'
-    WHEN regexp_contains(product_sku, r'CHARLIE') THEN 'Charlie'
-    WHEN regexp_contains(product_sku, r'NOLA') THEN 'Nola Sweater'
-    WHEN regexp_contains(product_sku, r'ROSIE') THEN 'Rosie Skirt'
-
-
-
+  , CASE
+  {{ sales_reports_line_items__sku('returns_report') }}
     ELSE product_sku END AS metabase_line_style_name
   , shipping_address_country
   , style

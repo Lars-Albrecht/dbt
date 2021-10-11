@@ -1,6 +1,5 @@
-{% macro sales_reports_line_items__sku(report) %}
-    {% if report=='sales_report' %}
-
+{%- macro sales_reports_line_items__sku(report) %}
+    {%- if report=='sales_report' %}
         WHEN line_items__sku LIKE '%4007%' OR UPPER(line_items__sku) LIKE '%HWLEG%' THEN 'High Waisted Leggings'
         WHEN line_items__sku LIKE '%WPAUL125%' OR line_items__sku LIKE '%BA-PAUL%' THEN 'Paul'
         WHEN line_items__sku LIKE '%WSTELL125%' OR line_items__sku LIKE '%WSTELLA125%' OR line_items__sku LIKE '%STELLA%' THEN 'Stella'
@@ -40,9 +39,11 @@
         WHEN line_items__sku LIKE '%CHARLIE%' THEN 'Charlie'
         WHEN line_items__sku LIKE '%NOLA%' THEN 'Nola'
         WHEN line_items__sku LIKE '%ROSIE%' THEN 'Rosie'
+        WHEN line_items__sku LIKE '%MARGOT%' THEN 'Margot'
 
-    {% endif %}
-    {% if report=='returns_report' %}
+
+        {%- endif -%}
+    {%- if report=='returns_report' %}
     WHEN regexp_contains(product_sku, r'(set|SET)') THEN product_sku
     WHEN regexp_contains(product_sku, r'4007') THEN 'High waisted Leggings'
     WHEN regexp_contains(product_sku, r'07-BA-(LUNA|HWLEG)-(FG|VV|TM|MR)') THEN 'Luna Leggings KN'
@@ -86,7 +87,7 @@
     WHEN regexp_contains(product_sku, r'CHARLIE') THEN 'Charlie'
     WHEN regexp_contains(product_sku, r'NOLA') THEN 'Nola Sweater'
     WHEN regexp_contains(product_sku, r'ROSIE') THEN 'Rosie Skirt'
-    
-    {% endif %}
+    WHEN regexp_contains(product_sku, r'MARGOT') THEN 'Margot'
 
-{% endmacro %}
+    {%- endif %}
+{%- endmacro %}
