@@ -91,6 +91,8 @@ models:
           schema: 'surveys'
         transactions:
           schema: 'transactions'
+        tax_lines:
+          schema: 'tax_lines'
         xentral:
           schema: 'xentral'
         zendesk:

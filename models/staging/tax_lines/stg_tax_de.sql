@@ -4,7 +4,7 @@ SELECT
     tl.value.price AS tax_amount,	
     tl.value.rate AS tax_rate,
     tl.value.title As tax_title,
-    row_number() OVER(PARTITION BY o.id,tl.value.price,tl.value.rate) as row_number
+    row_number() OVER(PARTITION BY o.id,tl.value.rate) as row_number
 FROM leslunes-raw.shopify_de.orders o
 LEFT JOIN UNNEST(tax_lines) AS tl
 )

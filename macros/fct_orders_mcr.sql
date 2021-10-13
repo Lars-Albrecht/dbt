@@ -50,14 +50,9 @@ SELECT
 FROM {{ ref(['stg_refunds_amount_per_order_',country]|join) }} 
 GROUP BY transaction_id
 ), TAXES AS(
-SELECT 
-  o.id AS transaction_id,		
-  SUM(tl.value.price) AS tax_amount,	
-  AVG(tl.value.rate) AS tax_rate,
-  tl.value.title As tax_title,
-FROM `leslunes-raw`.`shopify_de`.`orders` o
-LEFT JOIN UNNEST(tax_lines) AS tl
-GROUP BY 1,4
+  SELECT 
+  * 
+  FROM {{ ref(['stg_tax_',country]|join) }} 
 )
 
 
