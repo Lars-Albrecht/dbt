@@ -87,6 +87,7 @@ products_returned
      ELSE regexp_extract(product_sku, "^(\\w*)") 
   END as style,
   CASE
+    WHEN product_sku = "08-ECR-ROSIE-BGmM" THEN "M" ### workaround because of malformed SKU
     WHEN product_sku like "0%" THEN SPLIT(product_sku, "-")[SAFE_OFFSET(4)]
     WHEN regexp_extract(product_sku, "^(\\w*)") = "W" THEN regexp_extract(product_sku,"(\\w*\\/\\w*)$")
     WHEN regexp_extract(product_sku, "-([A-Z/0-9]*)-\\w\\/?\\w*$") = "EC" THEN "UNI"
@@ -94,6 +95,7 @@ products_returned
   ELSE regexp_extract(product_sku, "-([A-Z/0-9]*)-\\w\\/?\\w*$") END AS size,
   ### extract and transform color from skus like W-219-ALEN-07-01-100-101-260-100-XS/S where color is in the 3-digits next to size (at the end)
   CASE 
+  WHEN product_sku = "08-ECR-ROSIE-BGmM" THEN "BGm" ### workaround because of malformed SKU
   WHEN product_sku like "0%" THEN SPLIT(product_sku, "-")[SAFE_OFFSET(3)]
   WHEN regexp_extract(product_sku, "^(\\w*)") = "W" THEN (
                           SELECT color 
