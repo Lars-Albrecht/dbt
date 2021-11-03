@@ -40,7 +40,8 @@
         WHEN line_items__sku LIKE '%NOLA%' THEN 'Nola'
         WHEN line_items__sku LIKE '%ROSIE%' THEN 'Rosie'
         WHEN line_items__sku LIKE '%MARGOT%' THEN 'Margot'
-
+        WHEN line_items__sku LIKE  '%ELLA%') THEN 'Ella',
+        WHEN line_items__sku LIKE  '%LUCA%') THEN 'Luca'
 
         {%- endif -%}
     {%- if report=='returns_report' %}
@@ -88,6 +89,7 @@
     WHEN regexp_contains(product_sku, r'NOLA') THEN 'Nola Sweater'
     WHEN regexp_contains(product_sku, r'ROSIE') THEN 'Rosie Skirt'
     WHEN regexp_contains(product_sku, r'MARGOT') THEN 'Margot'
-
+    WHEN regexp_contains(product_sku, r'ELLA') THEN 'Ella'
+    WHEN regexp_contains(product_sku, r'LUCA') THEN 'Luca'
     {%- endif %}
 {%- endmacro %}
