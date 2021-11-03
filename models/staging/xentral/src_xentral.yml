@@ -7,4 +7,5 @@ sources:
     schema: xentral
     tables:
       - name: influencer_orders
+      - name: influencer_orders_old
       - name: physical_and_virtual_stock
