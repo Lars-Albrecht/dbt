@@ -40,8 +40,8 @@
         WHEN line_items__sku LIKE '%NOLA%' THEN 'Nola'
         WHEN line_items__sku LIKE '%ROSIE%' THEN 'Rosie'
         WHEN line_items__sku LIKE '%MARGOT%' THEN 'Margot'
-        WHEN line_items__sku LIKE  '%ELLA%') THEN 'Ella',
-        WHEN line_items__sku LIKE  '%LUCA%') THEN 'Luca'
+        WHEN line_items__sku LIKE '%ELLA%' THEN 'Ella'
+        WHEN line_items__sku LIKE '%LUCA%' THEN 'Luca'
 
         {%- endif -%}
     {%- if report=='returns_report' %}
