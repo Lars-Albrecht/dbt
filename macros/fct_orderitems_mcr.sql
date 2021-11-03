@@ -177,7 +177,7 @@ SELECT DISTINCT
 FROM final
 )
 
-SELECT DISTINCT
+SELECT
   f.shopify_transaction_id,	
   TO_BASE64(MD5(UPPER(email))) AS email_hash,
   f.created_at AS created_at,
