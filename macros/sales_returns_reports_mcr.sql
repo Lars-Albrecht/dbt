@@ -22,7 +22,7 @@
         WHEN line_items__sku LIKE '%VALERY%' THEN 'The Valery Scarf'
         WHEN line_items__sku LIKE '%LUNA%' THEN 'Luna Leggings'
         WHEN line_items__sku LIKE '%ABBY%' THEN 'Abby'
-        WHEN line_items__sku LIKE  '%CARA2% 'THEN 'Cara_2'
+        WHEN line_items__sku LIKE '%CARA2% 'THEN 'Cara_2'
         WHEN line_items__sku LIKE '%CARA%' THEN 'Cara'
         WHEN line_items__sku LIKE '%LOU%' THEN 'Lou'
         WHEN line_items__sku LIKE '%BELLE%' THEN 'Belle'
@@ -42,7 +42,16 @@
         WHEN line_items__sku LIKE '%MARGOT%' THEN 'Margot'
         WHEN line_items__sku LIKE '%ELLA%' THEN 'Ella'
         WHEN line_items__sku LIKE '%LUCA%' THEN 'Luca'
-
+        WHEN line_items__sku LIKE '%LAYLA%' THEN 'Layla'
+        WHEN line_items__sku LIKE '%LAUREN%' THEN 'Lauren'
+        WHEN line_items__sku LIKE '%LOLA%' THEN 'Lola'
+        WHEN line_items__sku LIKE '%NELLY%' THEN 'Nelly'
+        WHEN line_items__sku LIKE '%TONI%' THEN 'Toni'
+        WHEN line_items__sku LIKE '%JOLIE%' THEN 'Jolie'
+        WHEN line_items__sku LIKE '%JOSY%' THEN 'Josy'
+        WHEN line_items__sku LIKE '%ESTEL%' THEN 'Estelle'
+        WHEN line_items__sku LIKE '%JOY%' THEN 'Joy'
+        WHEN line_items__sku LIKE '%JOSY%' THEN 'Josy'
         {%- endif -%}
     {%- if report=='returns_report' %}
     WHEN regexp_contains(product_sku, r'(set|SET)') THEN product_sku
@@ -91,5 +100,15 @@
     WHEN regexp_contains(product_sku, r'MARGOT') THEN 'Margot'
     WHEN regexp_contains(product_sku, r'ELLA') THEN 'Ella'
     WHEN regexp_contains(product_sku, r'LUCA') THEN 'Luca'
+    WHEN regexp_contains(product_sku, r'LAYLA') THEN 'Layla'
+    WHEN regexp_contains(product_sku, r'LAUREN') THEN 'Lauren'
+    WHEN regexp_contains(product_sku, r'LOLA') THEN 'Lola'
+    WHEN regexp_contains(product_sku, r'NELLY') THEN 'Nelly'
+    WHEN regexp_contains(product_sku, r'TONI') THEN 'Toni'
+    WHEN regexp_contains(product_sku, r'JOLIE') THEN 'Jolie'
+    WHEN regexp_contains(product_sku, r'JOSY') THEN 'Josy'
+    WHEN regexp_contains(product_sku, r'ESTEL') THEN 'Estelle'
+    WHEN regexp_contains(product_sku, r'JOY') THEN 'Joy'
+    WHEN regexp_contains(product_sku, r'JOSY') THEN 'josy'
     {%- endif %}
 {%- endmacro %}
