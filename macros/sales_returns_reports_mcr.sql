@@ -52,7 +52,8 @@
         WHEN line_items__sku LIKE '%ESTEL%' THEN 'Estelle'
         WHEN line_items__sku LIKE '%JOY%' THEN 'Joy'
         WHEN line_items__sku LIKE '%JOSY%' THEN 'Josy'
-        {%- endif -%}
+        WHEN line_items__sku LIKE '%ALEXIS%' THEN 'Alexis'
+    {%- endif -%}
     {%- if report=='returns_report' %}
     WHEN regexp_contains(product_sku, r'(set|SET)') THEN product_sku
     WHEN regexp_contains(product_sku, r'4007') THEN 'High waisted Leggings'
@@ -109,6 +110,7 @@
     WHEN regexp_contains(product_sku, r'JOSY') THEN 'Josy'
     WHEN regexp_contains(product_sku, r'ESTEL') THEN 'Estelle'
     WHEN regexp_contains(product_sku, r'JOY') THEN 'Joy'
-    WHEN regexp_contains(product_sku, r'JOSY') THEN 'josy'
+    WHEN regexp_contains(product_sku, r'JOSY') THEN 'Josy'
+    WHEN regexp_contains(product_sku, r'ALEXIS') THEN 'Alexis'
     {%- endif %}
 {%- endmacro %}
