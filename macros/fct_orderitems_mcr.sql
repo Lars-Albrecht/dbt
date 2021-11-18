@@ -11,7 +11,8 @@ WITH line_items_sets AS(
   o.name, 
   li.value.id AS line_item_id,
   li.value.title AS order_item, 
-  li.value.quantity as qty,
+  li.value.quantity AS qty,
+  li.value.variant_id AS variant_id,
   "set_item" AS item_type,
   email, 
   tags,
@@ -39,6 +40,7 @@ line_items AS(
     li.value.title AS item_title, 
     li.value.id AS line_item_id,
     li.value.price_set.shop_money.amount,
+    li.value.variant_id AS variant_id,
     li.value.quantity as qty,
     CASE 
       WHEN 
@@ -56,23 +58,20 @@ FROM leslunes-raw.shopify_{{country}}.orders o,
 UNNEST(line_items) AS li
 WHERE test = False
 ), tax AS (
- 
- SELECT 
-  distinct 
-  id AS shopify_transaction_id ,tx.value.rate AS tax_rate, 
+  SELECT DISTINCT 
+    id AS shopify_transaction_id ,tx.value.rate AS tax_rate, 
   FROM leslunes-raw.shopify_{{country}}.orders,
-  UNNEST(line_items) AS li,
-  UNNEST(li.value.tax_lines) AS tx
+    UNNEST(line_items) AS li,
+    UNNEST(li.value.tax_lines) AS tx
  
 ), shipping AS(
-SELECT 
-  distinct
-  o.id AS shopify_transaction_id,
-  sl.value.code AS shipping_method,
-  shipping_address.country As shipping_country
+  SELECT DISTINCT
+    o.id AS shopify_transaction_id,
+    sl.value.code AS shipping_method,
+    shipping_address.country As shipping_country
 FROM  
-  leslunes-raw.shopify_{{country}}.orders o,
-  UNNEST(shipping_lines) AS sl
+    leslunes-raw.shopify_{{country}}.orders o,
+    UNNEST(shipping_lines) AS sl
 ),
 coupon_codes AS(
   SELECT distinct
@@ -118,16 +117,17 @@ LEFT JOIN UNNEST(li.value.discount_allocations) dall ON dall.value.amount > 0
 
 final AS(
   SELECT 
-   id AS shopify_transaction_id,
-   email,
-   created_at,
+    id AS shopify_transaction_id,
+    email,
+    created_at,
    
-   note AS order_note, 
-   name AS shop_order_ref,
-   order_number, 
+    note AS order_note, 
+    name AS shop_order_ref,
+    order_number, 
    
     order_item, 
     qty,
+    variant_id,
     item_title,	
     item_desc, 
    
@@ -146,25 +146,26 @@ WHERE
 UNION ALL
 
 SELECT 
- id AS shopify_transaction_id, 
- email ,
- created_at,
+  id AS shopify_transaction_id, 
+  email ,
+  created_at,
  
- note AS order_note, 
- name AS shop_order_ref,
- order_number, 
+  note AS order_note, 
+  name AS shop_order_ref,
+  order_number, 
  
- CASE WHEN sku = "" THEN order_item ELSE sku END AS order_item, 
- qty,
- order_item AS item_title,
- sku AS item_desc,
+  CASE WHEN sku = "" THEN order_item ELSE sku END AS order_item, 
+  qty,
+  variant_id,
+  order_item AS item_title,
+  sku AS item_desc,
  
- amount,
+  amount,
  
- line_item_id as LID,
- item_type, 
- tags,
- source_name
+  line_item_id as LID,
+  item_type, 
+  tags,
+  source_name
 FROM line_items li 
 WHERE 
   row_number = 1
@@ -187,6 +188,7 @@ SELECT
     THEN REGEXP_EXTRACT(item_desc, r"\(SKU: (.*?)\)") 
     ELSE item_desc END 
   AS sku,
+  variant_id,
   qty,
   order_item,
   s.shipping_method,
