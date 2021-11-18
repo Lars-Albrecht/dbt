@@ -3,7 +3,7 @@
 WITH CTE AS (
 ### DE
 SELECT 
-  *
+  * 
 FROM {{ref('stg_shipments_de')}} 
 
 UNION ALL
@@ -15,13 +15,13 @@ FROM {{ref('stg_shipments_xentral')}}
 ### FR
 UNION ALL
 SELECT 
-    *
+    * 
 FROM {{ref('stg_shipments_fr')}} 
 
 ### IT
 UNION ALL
 SELECT 
-  *
+  * 
 FROM {{ref('stg_shipments_it')}} 
 )
 
