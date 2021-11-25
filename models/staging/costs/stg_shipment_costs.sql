@@ -1,6 +1,6 @@
 SELECT 
-  year,
-  month,
+  SAFE_CAST(year AS INT64) AS year,
+  SAFE_CAST(month AS INT64) AS month,
   CASE 
       WHEN MONTH = "January" THEN 1
       WHEN MONTH = "February" THEN 2
@@ -15,6 +15,7 @@ SELECT
       WHEN MONTH = "November" THEN 11
       WHEN MONTH = "December" THEN 12
     END AS month_int,
-  SAFE_CAST(price_per_order AS FLOAT64) AS shipment_cost_per_order
+  SAFE_CAST(price_per_order AS FLOAT64) AS shipment_cost_per_order,
+  SAFE_CAST(price_per_article AS FLOAT64) AS price_per_article
 FROM `leslunes-prep.dbt_prod_gsheets.stg_fulfillment_costs`
-order by month_int
+order by year, month_int
