@@ -18,5 +18,3 @@ SELECT
   category	
 FROM `leslunes-raw.products.masterlist` 
 WHERE product_name IS NOT NULL
-
-AND sku = "07-BA-LUNA-FG-XS"
