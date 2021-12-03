@@ -1,6 +1,6 @@
 SELECT 
   SAFE_CAST(year AS INT64) AS year,
-  SAFE_CAST(month AS INT64) AS month,
+  month,
   CASE 
       WHEN MONTH = "January" THEN 1
       WHEN MONTH = "February" THEN 2
