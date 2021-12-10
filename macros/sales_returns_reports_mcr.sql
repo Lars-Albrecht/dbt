@@ -53,7 +53,7 @@
         WHEN line_items__sku LIKE '%JOY%' THEN 'Joy'
         WHEN line_items__sku LIKE '%JOSY%' THEN 'Josy'
         WHEN line_items__sku LIKE '%ALEXIS%' THEN 'Alexis'
-        WHEN line_items__sku LIKE '%TESTTEST1245%' THEN 'TESTTEST1245'
+        WHEN line_items__sku LIKE '%TESTTEST1245%' THEN 'TESTTEST12456'
 
     {%- endif -%}
     {%- if report=='returns_report' %}
