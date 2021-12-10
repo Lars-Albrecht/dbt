@@ -53,7 +53,6 @@
         WHEN line_items__sku LIKE '%JOY%' THEN 'Joy'
         WHEN line_items__sku LIKE '%JOSY%' THEN 'Josy'
         WHEN line_items__sku LIKE '%ALEXIS%' THEN 'Alexis'
-        WHEN line_items__sku LIKE '%TESTTEST1245%' THEN 'TESTTEST12456'
 
     {%- endif -%}
     {%- if report=='returns_report' %}
@@ -114,6 +113,5 @@
     WHEN regexp_contains(product_sku, r'JOY') THEN 'Joy'
     WHEN regexp_contains(product_sku, r'JOSY') THEN 'Josy'
     WHEN regexp_contains(product_sku, r'ALEXIS') THEN 'Alexis'
-    WHEN regexp_contains(product_sku, r'TESTTEST1245') THEN 'TESTTEST1245'
     {%- endif %}
 {%- endmacro %}
