@@ -1,5 +1,9 @@
 {{ config(materialized='view')}}
 
+/*
+* combination of all shipments in all zenfulfillment accounts
+*/
+
 WITH CTE AS (
 ### DE
 SELECT 
