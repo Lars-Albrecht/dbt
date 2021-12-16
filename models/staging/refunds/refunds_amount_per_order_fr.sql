@@ -10,6 +10,7 @@ FROM (
      {{ source('refunds_fr', 'transactions') }}
   WHERE
     kind='refund'
-    AND status='success') AS refunds
+    AND status='success'
+    AND CONCAT('FR',id) NOT IN (SELECT CONCAT(source, id) FROM `leslunes-rep.bi.transactions_to_exclude`)) AS refunds
 WHERE
   rn=1

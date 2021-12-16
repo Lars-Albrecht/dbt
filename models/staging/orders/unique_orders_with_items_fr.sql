@@ -63,7 +63,7 @@ FROM `leslunes-prep.dbt_items.unique_items_fr`) as items ON CAST(orders.id AS ST
 LEFT JOIN ( 
 #Columns from unique_refunds
 SELECT order_id, SUM(refund_amount) AS refund_amount, MIN(refunded_at) AS refunded_at FROM 
-(SELECT ROW_NUMBER() OVER (PARTITION BY id, kind ORDER BY _sdc_batched_at DESC) AS rn, id, order_id, status, kind, amount AS refund_amount, _sdc_extracted_at, created_at AS refunded_at FROM leslunes-raw.shopify_fr.transactions WHERE status='success' AND kind='refund') AS A 
+(SELECT ROW_NUMBER() OVER (PARTITION BY id, kind ORDER BY _sdc_batched_at DESC) AS rn, id, order_id, status, kind, amount AS refund_amount, _sdc_extracted_at, created_at AS refunded_at FROM leslunes-raw.shopify_fr.transactions WHERE status='success' AND kind='refund' AND CONCAT('FR',id) NOT IN (SELECT CONCAT(source, id) FROM `leslunes-rep.bi.transactions_to_exclude`)) AS A 
 WHERE rn=1
 GROUP BY order_id) AS refunds ON CAST(orders.id AS STRING) = CAST(refunds.order_id AS STRING)
 
