@@ -53,6 +53,7 @@
         WHEN line_items__sku LIKE '%JOY%' THEN 'Joy'
         WHEN line_items__sku LIKE '%JOSY%' THEN 'Josy'
         WHEN line_items__sku LIKE '%ALEXIS%' THEN 'Alexis'
+
     {%- endif -%}
     {%- if report=='returns_report' %}
     WHEN regexp_contains(product_sku, r'(set|SET)') THEN product_sku
@@ -63,6 +64,7 @@
     WHEN regexp_contains(product_sku, r'04-BA-STELLA-(MR|VV|DQ|CH|TM|DN|FG|BK)-(XS|S|M|L|XL)$') THEN 'Stella Jumpsuit SA SS'
     WHEN regexp_contains(product_sku, r'STEV') THEN 'Steve Turtleneck SA'
     WHEN regexp_contains(product_sku, r'03-ALENA-(BK|WH|SGR|FG)') THEN 'Alena UTG DS'
+    WHEN regexp_contains(product_sku, r'ALEN') AND NOT regexp_contains(product_sku, r'\/') THEN 'Alena SS'
     WHEN regexp_contains(product_sku, r'ALEN') THEN 'Alena SA DS'
     WHEN regexp_contains(product_sku, r'GRACE') THEN 'Grace Jumpsuit'
     WHEN regexp_contains(product_sku, r'LANA') THEN 'Lana Jumpsuit'

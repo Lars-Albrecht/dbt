@@ -8,11 +8,8 @@ SELECT
   shipping_address_country,
   re.products_returned,
   "DE" AS shop
-  #ROW_NUMBER() OVER (PARTITION BY products_sku, order_reference, wh_return_id, products_returned) AS row_number
 FROM `leslunes-prep.dbt_shipments.stg_shipments_de` o
 LEFT JOIN `leslunes-prep.dbt_returns.stg_returns_de` re on re.order_reference = o.reference AND re.products_sku = o.product_sku 
-#FROM `leslunes-raw.zenfulfillment.orders_de` o
-#LEFT JOIN `leslunes-raw.zenfulfillment.returns_de` re on re.order_reference = o.reference AND re.products_sku = o.product_sku 
 WHERE o.status = "SHIPPED"
 UNION ALL
 ### XENTRAL
@@ -24,12 +21,14 @@ SELECT
   shipping_address_country,
   IFNULL(re.products_returned, "no") AS products_returned,
   o.shop_order_reference AS shop
-  #ROW_NUMBER() OVER (PARTITION BY products_sku, order_reference, wh_return_id, products_returned) AS row_number
-FROM `leslunes-prep.dbt_shipments.stg_shipments_xentral` o
-LEFT JOIN `leslunes-prep.dbt_returns.stg_returns_xentral` re on re.order_reference = o.reference AND re.products_sku = o.product_sku 
-#FROM `leslunes-raw.zenfulfillment.orders_xentral` o
-#LEFT JOIN `leslunes-raw.zenfulfillment.returns_xentral` re on re.order_reference = o.reference AND re.products_sku = o.product_sku
-WHERE o.shop_order_reference not like "INF%" AND o.status = "SHIPPED" 
+FROM 
+  `leslunes-prep.dbt_shipments.stg_shipments_xentral` o
+LEFT JOIN 
+  `leslunes-prep.dbt_returns.stg_returns_xentral` re ON re.order_reference = o.reference AND re.products_sku = o.product_sku 
+WHERE 
+  # exclude influencer orders
+  o.shop_order_reference NOT LIKE "INF%" AND o.status = "SHIPPED"
+AND shipment_created_at != "None" 
 ### FR
 UNION ALL
 SELECT 
@@ -40,13 +39,11 @@ SELECT
   shipping_address_country,
   re.products_returned,
   "FR" as source
-  #ROW_NUMBER() OVER (PARTITION BY products_sku, order_reference, wh_return_id, products_returned) AS row_number
- FROM `leslunes-prep.dbt_shipments.stg_shipments_fr` o
-LEFT JOIN `leslunes-prep.dbt_returns.stg_returns_fr` re on re.order_reference = o.reference AND re.products_sku = o.product_sku 
-#FROM `leslunes-raw.zenfulfillment.orders_fr` o
-#LEFT JOIN `leslunes-raw.zenfulfillment.returns_fr` re on re.order_reference = o.reference AND re.products_sku = o.product_sku
+FROM 
+  `leslunes-prep.dbt_shipments.stg_shipments_fr` o
+LEFT JOIN 
+  `leslunes-prep.dbt_returns.stg_returns_fr` re ON re.order_reference = o.reference AND re.products_sku = o.product_sku 
 WHERE o.status = "SHIPPED"
-
 ### IT
 UNION ALL
 SELECT 
@@ -57,13 +54,9 @@ SELECT
   shipping_address_country,
   re.products_returned,
   "IT" as shop
-  #ROW_NUMBER() OVER (PARTITION BY products_sku, order_reference, wh_return_id, products_returned) AS row_number
 FROM `leslunes-prep.dbt_shipments.stg_shipments_it` o
 LEFT JOIN `leslunes-prep.dbt_returns.stg_returns_it` re on re.order_reference = o.reference AND re.products_sku = o.product_sku 
-#FROM `leslunes-raw.zenfulfillment.orders_it` o
-#LEFT JOIN `leslunes-raw.zenfulfillment.returns_it` re on re.order_reference = o.reference AND re.products_sku = o.product_sku 
 WHERE o.status = "SHIPPED"
-
 )
 
 SELECT 
