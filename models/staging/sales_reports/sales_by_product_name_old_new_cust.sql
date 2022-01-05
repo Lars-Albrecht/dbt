@@ -1,7 +1,7 @@
 SELECT product_name,
  {% set col_dict = dbt_utils.get_query_results_as_dict("
 WITH days AS (
-SELECT * FROM UNNEST(GENERATE_DATE_ARRAY((SELECT min(date(created_at)) FROM `leslunes-prep.dbt_orders.unique_orders_with_items_de`), current_date()+31, INTERVAL 1 month)) AS day
+SELECT * FROM UNNEST(GENERATE_DATE_ARRAY((SELECT min(date(created_at)) FROM `leslunes-prep.dbt_orderitems.stg_orderitems_de`), current_date()+31, INTERVAL 1 month)) AS day
 )
 select DISTINCT(SUBSTR(SAFE_CAST(day AS STRING),1,7)) as day from days
 ") %}
@@ -22,26 +22,16 @@ END
    FROM ( 
     SELECT created_at, product_name, size, colour, SUM(line_items__quantity) AS quantity, CASE WHEN th_purchase=1 THEN 'new' else 'old' END AS customer_type FROM
     (SELECT
-      ROW_NUMBER () OVER (PARTITION BY email /*, source*/ ORDER BY created_at) AS th_purchase,
-      line_items__name,
-      line_items__quantity,
+      ROW_NUMBER () OVER (PARTITION BY email_hash ORDER BY created_at) AS th_purchase,
+      qty AS line_items__quantity,
       SUBSTR(SAFE_CAST(created_at AS STRING),1,7) AS created_at,
-      line_items__sku as line,
-      CASE
-        WHEN SUBSTR(REGEXP_EXTRACT(line_items__sku, r'^[A-Za-z \d\W]+'),-3)='-2-' 
-          THEN SUBSTR(REGEXP_EXTRACT(line_items__sku, r'^[A-Za-z \d\W]+'),1,LENGTH(REGEXP_EXTRACT(line_items__sku, r'^[A-Za-z \d\W]+'))-3)
-        WHEN SUBSTR(REGEXP_EXTRACT(line_items__sku, r'^[A-Za-z \d\W]+'),-1)='-' 
-          THEN SUBSTR(REGEXP_EXTRACT(line_items__sku, r'^[A-Za-z \d\W]+'),1,LENGTH(REGEXP_EXTRACT(line_items__sku, r'^[A-Za-z \d\W]+'))-1)
-      ELSE
-      REGEXP_EXTRACT(line_items__sku, r'^[A-Z \d\W]+')
-    END
-      AS line_items__sku
+      sku AS line_items__sku
     FROM
-     `leslunes-prep.dbt_orders.unique_orders_with_items_de`
-    WHERE
-      (source_name='web')
-      AND line_items__sku!='' 
-      AND created_at>='2020-08-01' AND UPPER(line_items__name) NOT LIKE '%SET%') AS orders
+    `leslunes-prep.dbt_orderitems.stg_orderitems_de`
+    WHERE 
+      source_name='web'
+        AND created_at>='2020-08-01' 
+        AND item_type!='set' ) AS orders
   LEFT JOIN (
     SELECT
       sku,
@@ -53,6 +43,6 @@ END
       ) AS list
   ON
     orders.line_items__sku=list.sku 
-    GROUP BY created_at, product_name, size, colour, customer_type, line
+    GROUP BY created_at, product_name, size, colour, customer_type
     ) AS A GROUP BY product_name
     ORDER BY product_name

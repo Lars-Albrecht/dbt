@@ -3,7 +3,7 @@ SELECT
   SUM(line_items__quantity) AS line_items__quantity,
     {% set col_dict = dbt_utils.get_query_results_as_dict("
 WITH days AS (
-SELECT * FROM UNNEST(GENERATE_DATE_ARRAY((SELECT min(date(created_at)) FROM `leslunes-prep.dbt_orders.orders_with_items_combined`), current_date()+31, INTERVAL 1 month)) AS day
+SELECT * FROM UNNEST(GENERATE_DATE_ARRAY((SELECT min(date(created_at)) FROM `leslunes-prep.dbt_orderitems.stg_orderitems_combined`), current_date()+31, INTERVAL 1 month)) AS day
 )
 select DISTINCT(SUBSTR(SAFE_CAST(day AS STRING),1,7)) as day from days
 ") %}
@@ -25,18 +25,18 @@ FROM (
     END
       ) AS type,
     line_items__sku,
-    SUM(SAFE_CAST(line_items__quantity AS INT64)) AS line_items__quantity,
+    SUM(SAFE_CAST(qty AS INT64)) AS line_items__quantity,
     SUBSTR(SAFE_CAST(created_at AS STRING),1,7) AS order_date,
   FROM
-    `leslunes-prep.dbt_orders.orders_with_items_combined` #`les-lunes-data-269915.import_combined.unique_orders_with_items`
-  WHERE
+    `leslunes-prep.dbt_orderitems.stg_orderitems_combined` 
+    WHERE
     (UPPER(note) LIKE '%INFLUENCE%'
       OR UPPER(tags) LIKE '%INFLUENCE%')
-    AND line_items__sku!='' AND UPPER(line_items__sku) NOT LIKE '%SET%'
+    AND item_type!='set' 
   GROUP BY
     order_date,
     line_items__sku,
-    type ) AS sales
+    type) AS sales
 GROUP BY
   type
 ORDER BY
