@@ -25,6 +25,6 @@ product_sku
 , sum(eleven) AS late_delivery_wrong_item
 , sum(twelve) AS others
 FROM ( 
-SELECT * FROM `leslunes-prep.returns.unique_returned_items` 
+SELECT * FROM `leslunes-prep.dbt_returns.unique_returned_items` 
 ) 
 GROUP BY 1,2,3,4,5,6,7,8
