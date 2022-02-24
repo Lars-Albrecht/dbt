@@ -24,7 +24,7 @@ FROM (
       'Other'
     END
       ) AS type,
-    sku,
+    sku AS line_items__sku,
     SUM(SAFE_CAST(qty AS INT64)) AS line_items__quantity,
     SUBSTR(SAFE_CAST(created_at AS STRING),1,7) AS order_date,
 
