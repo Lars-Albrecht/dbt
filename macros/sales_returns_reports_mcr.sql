@@ -58,8 +58,8 @@
     {%- if report=='returns_report' %}
     WHEN regexp_contains(product_sku, r'(set|SET)') THEN product_sku
     WHEN regexp_contains(product_sku, r'4007') THEN 'High waisted Leggings'
-    WHEN regexp_contains(product_sku, r'07-BA-(LUNA|HWLEG)-(FG|VV|TM|MR)') THEN 'Luna Leggings KN'
-    WHEN regexp_contains(product_sku, r'07-BA-(LUNA|HWLEG)-(DT|CH|RT|HG|DN|BK|LL|EB|LG|WL)') THEN 'Luna Leggings SA'
+    WHEN regexp_contains(product_sku, r'07-BA-(LUNA|HWLEG)-(FG|VV|TM|MR)') THEN 'Luna Leggings' /*'Luna Leggings KN'*/
+    WHEN regexp_contains(product_sku, r'07-BA-(LUNA|HWLEG)-(DT|CH|RT|HG|DN|BK|LL|EB|LG|WL)') THEN 'Luna Leggings'/*'Luna Leggings SA'*/
     WHEN regexp_contains(product_sku, r'(04-BA-STELLA|WSTELL125|WSTELLA125).*(XSP|XS\/S|S\/M|M\/L|L\/XL|M\/L)') THEN 'Stella Jumpsuit SA DS'
     WHEN regexp_contains(product_sku, r'04-BA-STELLA-(MR|VV|DQ|CH|TM|DN|FG|BK)-(XS|S|M|L|XL)$') THEN 'Stella Jumpsuit SA SS'
     WHEN regexp_contains(product_sku, r'STEV') THEN 'Steve Turtleneck SA'
