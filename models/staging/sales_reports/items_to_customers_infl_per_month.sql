@@ -34,7 +34,7 @@ FROM (
             created_at
         FROM `leslunes-prep.dbt_orderitems.stg_orderitems_combined` 
         WHERE (source_name='web'
-            OR UPPER(note) LIKE '%INFLUENCE%'
+            OR UPPER(order_note) LIKE '%INFLUENCE%'
             OR UPPER(tags) LIKE '%INFLUENCE%')
             AND item_type!='set' 
         ) AS sales 
