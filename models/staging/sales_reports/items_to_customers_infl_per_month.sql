@@ -26,14 +26,18 @@ FROM (
       ) AS type,
     line_items__sku,
     SUM(SAFE_CAST(qty AS INT64)) AS line_items__quantity,
-    SUBSTR(SAFE_CAST(created_at AS STRING),1,7) AS order_date,
-  FROM
-    `leslunes-prep.dbt_orderitems.stg_orderitems_combined` 
-    WHERE
-    (source_name='web'
-      OR UPPER(note) LIKE '%INFLUENCE%'
-      OR UPPER(tags) LIKE '%INFLUENCE%')
-    AND item_type!='set' 
+    SUBSTR(SAFE_CAST(created_at AS STRING),1,7) AS order_date
+    FROM (
+        SELECT 
+            sku AS line_items__sku,
+            qty,
+            created_at
+        FROM `leslunes-prep.dbt_orderitems.stg_orderitems_combined` 
+        WHERE (source_name='web'
+            OR UPPER(note) LIKE '%INFLUENCE%'
+            OR UPPER(tags) LIKE '%INFLUENCE%')
+            AND item_type!='set' 
+        ) AS sales 
   GROUP BY
     order_date,
     line_items__sku,
