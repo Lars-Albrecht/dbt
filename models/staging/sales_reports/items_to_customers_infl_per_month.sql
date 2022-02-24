@@ -3,7 +3,7 @@ SELECT
   SUM(line_items__quantity) AS line_items__quantity,
   {% set col_dict = dbt_utils.get_query_results_as_dict("
 WITH days AS (
-SELECT * FROM UNNEST(GENERATE_DATE_ARRAY((SELECT min(date(created_at)) FROM FROM `leslunes-prep.dbt_orderitems.stg_orderitems_combined`), current_date()+31, INTERVAL 1 month)) AS day
+SELECT * FROM UNNEST(GENERATE_DATE_ARRAY((SELECT min(date(created_at)) FROM `leslunes-prep.dbt_orderitems.stg_orderitems_combined`), current_date()+31, INTERVAL 1 month)) AS day
 )
 select DISTINCT(SUBSTR(SAFE_CAST(day AS STRING),1,7)) as day from days
 ") %}
