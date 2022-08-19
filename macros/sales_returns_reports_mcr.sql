@@ -53,6 +53,10 @@
         WHEN line_items__sku LIKE '%JOY%' THEN 'Joy'
         WHEN line_items__sku LIKE '%JOSY%' THEN 'Josy'
         WHEN line_items__sku LIKE '%ALEXIS%' THEN 'Alexis'
+        WHEN line_items__sku LIKE '%VERITY%' THEN 'Verity'
+        WHEN line_items__sku LIKE '%AMELIA%' THEN 'Amelia'
+        WHEN line_items__sku LIKE '%CLAIRE%' THEN 'Claire Scarf'
+        WHEN line_items__sku LIKE '%AURA%' THEN 'Aura Bracelet'
 
     {%- endif -%}
     {%- if report=='returns_report' %}
@@ -114,5 +118,10 @@
     WHEN regexp_contains(product_sku, r'JOY') THEN 'Joy'
     WHEN regexp_contains(product_sku, r'JOSY') THEN 'Josy'
     WHEN regexp_contains(product_sku, r'ALEXIS') THEN 'Alexis'
+    WHEN regexp_contains(product_sku, r'VERITY') THEN 'Verity'
+    WHEN regexp_contains(product_sku, r'AMELIA') THEN 'Amelia'
+    WHEN regexp_contains(product_sku, r'CLAIRE') THEN 'Claire Scarf'
+    WHEN regexp_contains(product_sku, r'AURA') THEN 'Aura Bracelet'
+
     {%- endif %}
 {%- endmacro %}
