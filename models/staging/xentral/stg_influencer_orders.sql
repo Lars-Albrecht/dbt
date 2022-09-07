@@ -8,6 +8,7 @@ SELECT
     ,Nummer
     ,Internetseite
     ,Bearbeiter
+    ,Internebemerkung
 FROM {{ source('xentral', 'influencer_orders') }}
 UNION ALL
 SELECT 
@@ -20,4 +21,5 @@ SELECT
     ,Nummer
     ,Internetseite
     ,Bearbeiter
+    ,NULL AS Internebemerkung
 FROM {{ source('xentral', 'influencer_orders_old') }}

@@ -26,7 +26,17 @@ WITH cte AS(
   1,3,18,19
  )
 
-SELECT  DATE(date_start) AS date, ROUND(sum(spend),2) AS total_spend 
+SELECT  
+DATE(date_start) AS date, 
+ROUND(sum(spend),2) AS total_spend,
+campaign_name AS campaign_name,
+CASE 
+  WHEN campaign_name like 'FR%' THEN 'FR'
+  WHEN campaign_name like 'PL%' THEN 'PL' 
+  ELSE 'DE'
+END AS shop
+--
 FROM CTE
-GROUP BY 1 
+WHERE spend != 0
+GROUP BY 1, 3, 4
 ORDER BY 1 DESC
