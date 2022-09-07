@@ -15,7 +15,7 @@ post_id
 , SAFE_CAST(SPLIT(current_followers, ".")[SAFE_OFFSET(0)] AS INT64) AS current_followers
 , total_views
 , total_customer
-, new_customer
+, SAFE_CAST(new_customer AS INT64) AS new_customer
 , SAFE_CAST(SPLIT(influencer_reported_views, ".")[SAFE_OFFSET(0)] AS INT64) AS influencer_reported_views
 , total_real_order_cost_net
 , coupon_code, cost_per_order
