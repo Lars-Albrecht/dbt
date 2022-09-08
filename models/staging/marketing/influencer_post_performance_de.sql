@@ -5,16 +5,16 @@ post_id
 , scheduled_at
 , CASE WHEN started_at = "not started yet" THEN "" ELSE started_at END AS started_at
 , SAFE_CAST(SPLIT(followers, ".")[SAFE_OFFSET(0)] AS INT64) AS followers
-, unique_views
+, SAFE_CAST(unique_views AS INT64) AS unique_views
 , SAFE_CAST(SPLIT(orders, ".")[SAFE_OFFSET(0)] AS INT64) AS orders
-, revenue_net
-, cost
+, ROUND(SAFE_CAST(revenue_net AS FLOAT64) ,4) AS revenue_net
+, ROUND(SAFE_CAST(cost AS FLOAT64) ,4) AS cost
 , ROUND(SAFE_CAST(cost_to_sales AS FLOAT64) ,4) AS cost_to_sales
 , status
 , SAFE_CAST(SPLIT(follower_at_time_of_start, ".")[SAFE_OFFSET(0)] AS INT64) AS follower_at_time_of_start
 , SAFE_CAST(SPLIT(current_followers, ".")[SAFE_OFFSET(0)] AS INT64) AS current_followers
 , total_views
-, total_customer
+, SAFE_CAST(total_customer AS INT64) AS total_customer
 , SAFE_CAST(new_customer AS INT64) AS new_customer
 , SAFE_CAST(SPLIT(influencer_reported_views, ".")[SAFE_OFFSET(0)] AS INT64) AS influencer_reported_views
 , total_real_order_cost_net
@@ -36,7 +36,7 @@ post_id
 , influencer_average_views
 , overall_post_rating
 , has_reminder
-, refund_ratio
+, SAFE_CAST(refund_ratio AS FLOAT64) AS refund_ratio
 , expected_revenue
 , bq_updated_at 
 FROM `leslunes-raw.unlooped.post_performance_de`
