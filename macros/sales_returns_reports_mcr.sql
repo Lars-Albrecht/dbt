@@ -59,6 +59,13 @@
         WHEN line_items__sku LIKE '%AURA%' THEN 'Aura Bracelet'
         WHEN line_items__sku LIKE '%ALVA%' THEN 'Alva Shirt'
         WHEN line_items__sku LIKE '%MAGGIE%' THEN 'Maggie Top'
+        WHEN line_items__sku LIKE '%FLEUR%' THEN 'Fleur Longsleeve'
+        WHEN line_items__sku LIKE '%LSIMO130%' THEN 'Anything But Basic Brief'
+        WHEN line_items__sku LIKE '%WB16ARCA%' THEN 'Arcachon Bralette'
+        WHEN line_items__sku LIKE '%WCHAR142%' THEN 'Charles Tee'
+        WHEN line_items__sku LIKE '%WCHAR242%' THEN 'Charles Loose Tee'
+        WHEN line_items__sku LIKE '%WGABI%' THEN 'Steve Turtleneck Mini Dress'
+        WHEN line_items__sku LIKE '%WTCL002%' THEN 'Anything But Basic Camisole'
 
     {%- endif -%}
     {%- if report=='returns_report' %}
@@ -126,6 +133,13 @@
     WHEN regexp_contains(product_sku, r'AURA') THEN 'Aura Bracelet'
     WHEN regexp_contains(product_sku, r'ALVA') THEN 'Alva Shirt'
     WHEN regexp_contains(product_sku, r'MAGGIE') THEN 'Maggie Top'
+    WHEN regexp_contains(product_sku, r'FLEUR') THEN 'Fleur Longsleeve' 
+    WHEN regexp_contains(product_sku, r'LSIMO130') THEN 'Anything But Basic Brief'
+    WHEN regexp_contains(product_sku, r'WB16ARCA') THEN 'Arcachon Bralette'
+    WHEN regexp_contains(product_sku, r'WCHAR142') THEN 'Charles Tee'
+    WHEN regexp_contains(product_sku, r'WCHAR242') THEN 'Charles Loose Tee'
+    WHEN regexp_contains(product_sku, r'WGABI') THEN 'Steve Turtleneck Mini Dress'
+    WHEN regexp_contains(product_sku, r'WTCL002') THEN 'Anything But Basic Camisole'
 
     {%- endif %}
 {%- endmacro %}
