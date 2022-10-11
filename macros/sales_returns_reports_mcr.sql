@@ -66,6 +66,12 @@
         WHEN line_items__sku LIKE '%WCHAR242%' THEN 'Charles Loose Tee'
         WHEN line_items__sku LIKE '%WGABI%' THEN 'Steve Turtleneck Mini Dress'
         WHEN line_items__sku LIKE '%WTCL002%' THEN 'Anything But Basic Camisole'
+        WHEN line_items__sku LIKE '%WCHAR242%' THEN 'Charles Loose Tee'
+        WHEN line_items__sku LIKE '%WGABI%' THEN 'Steve Turtleneck Mini Dress'
+        WHEN line_items__sku LIKE '%WTCL002%' THEN 'Anything But Basic Camisole'
+        WHEN line_items__sku LIKE '%POPPY%' THEN 'Poppy'
+        WHEN line_items__sku LIKE '%DALIA%' THEN 'Dalia'
+        WHEN line_items__sku LIKE '%HOLLY%' THEN 'Holly'
 
     {%- endif -%}
     {%- if report=='returns_report' %}
@@ -140,6 +146,9 @@
     WHEN regexp_contains(product_sku, r'WCHAR242') THEN 'Charles Loose Tee'
     WHEN regexp_contains(product_sku, r'WGABI') THEN 'Steve Turtleneck Mini Dress'
     WHEN regexp_contains(product_sku, r'WTCL002') THEN 'Anything But Basic Camisole'
+    WHEN regexp_contains(product_sku, r'POPPY') THEN 'Poppy'
+    WHEN regexp_contains(product_sku, r'DALIA') THEN 'Dalia'
+    WHEN regexp_contains(product_sku, r'HOLLY') THEN 'Holly'
 
     {%- endif %}
 {%- endmacro %}
