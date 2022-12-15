@@ -231,6 +231,7 @@ LEFT JOIN discounts d ON  d.transaction_id  = f.shopify_transaction_id and LID =
 LEFT JOIN tax t ON f.shopify_transaction_id = t.shopify_transaction_id
 LEFT JOIN shipping s ON s.shopify_transaction_id = f.shopify_transaction_id
 LEFT JOIN  first_purchase_date c ON c.email_hash = TO_BASE64(MD5(UPPER(f.email)))
+WHERE item_title NOT LIKE '__customerReferenceId'
 ORDER BY f.shopify_transaction_id
 
 {% endmacro %}
