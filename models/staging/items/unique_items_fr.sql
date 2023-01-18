@@ -58,7 +58,7 @@ SELECT * EXCEPT(row_number) FROM
     FROM leslunes-raw.shopify_fr.orders #les-lunes-data-269915.leslunes_fr.orders
     LEFT JOIN UNNEST(line_items) AS line_items
     LEFT JOIN UNNEST(line_items.value.properties) AS prop) AS A
-WHERE row_number = 1 AND line_items__name!='ll_fg' AND line_items__name!='ll_min_total') 
+WHERE row_number = 1 AND line_items__name!='ll_fg' AND line_items__name!='ll_min_total' AND line_items__name!='_ll_coupon_info') 
 UNION ALL
 #Sets
 (SELECT * EXCEPT(row_number) FROM 
@@ -119,5 +119,5 @@ UNION ALL
     LEFT JOIN UNNEST(line_items) AS line_items
     LEFT JOIN UNNEST(line_items.value.properties) AS prop
     WHERE (line_items.value. sku='' OR UPPER(line_items.value. sku) LIKE '%SET' OR UPPER(line_items.value. sku) LIKE '%BUNDLE%'  OR UPPER(line_items.value. sku) LIKE '%SET-2021' OR UPPER(line_items.value. sku) LIKE '%TRIO' OR UPPER(line_items.value. sku) LIKE '%DUO') AND prop.value.value IS NOT NULL) AS B
-WHERE row_number = 1 AND line_items__name!='ll_fg' AND line_items__name!='ll_min_total') 
+WHERE row_number = 1 AND line_items__name!='ll_fg' AND line_items__name!='ll_min_total' AND line_items__name!='_ll_coupon_info') 
 ORDER BY line_items__id DESC 
