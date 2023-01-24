@@ -139,4 +139,3 @@ WHERE row_number = 1 AND line_items__name!='ll_fg' AND line_items__name!='ll_min
 SELECT * FROM line_items_filtered
 UNION ALL 
 SELECT * FROM sets
-ORDER BY line_items__id DESC

@@ -247,6 +247,5 @@ LEFT JOIN shipping s ON s.shopify_transaction_id = f.shopify_transaction_id
 LEFT JOIN  first_purchase_date c ON c.email_hash = TO_BASE64(MD5(UPPER(f.email)))
 WHERE item_title NOT LIKE '%_customerReferenceId' 
 AND item_title NOT LIKE '_ll%' AND item_title not in("ll_fg", "ll_hash","ll_min_total") 
-ORDER BY f.shopify_transaction_id
 
 {% endmacro %}

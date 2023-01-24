@@ -38,4 +38,3 @@ UNION ALL
 SELECT SPLIT(shipment_created_at, "T")[SAFE_OFFSET(0)] AS shipment_created_at, product_sku, 
 FROM `leslunes-raw.zenfulfillment.orders_xentral`
 ) GROUP BY 1,2,4,5
-ORDER BY 1
