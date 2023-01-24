@@ -63,12 +63,13 @@ WHERE row_number = 1 AND line_items__name!='ll_fg' AND line_items__name!='ll_min
 
 line_items_filtered AS (
    SELECT * 
-EXCEPT(row_number) 
+EXCEPT(row_number, to_delete_flag) 
 FROM 
- (SELECT *, row_number() OVER (PARTITION BY order__id, line_items__title, line_items__sku ORDER BY line_items__name ASC) AS row_number,
+ (SELECT *, row_number() OVER (PARTITION BY order__id, line_items__title, line_items__name, line_items__sku ORDER BY line_items__name ASC) AS row_number,
+ CASE WHEN line_items__name  LIKE '%ll_%' AND (UPPER(line_items__title) LIKE '%SET%' OR UPPER(line_items__title) LIKE '%BUNDLE%'  OR UPPER(line_items__title) LIKE '%DUO%'  OR UPPER(line_items__title) LIKE '%TRIO%') THEN 1 ELSE 0 END AS to_delete_flag,
 FROM line_items)
 WHERE row_number = 1 
-AND line_items__sku IS NOT NULL
+AND line_items__sku IS NOT NULL AND to_delete_flag = 0
 ),
 
 sets as (SELECT * 
