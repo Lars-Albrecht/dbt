@@ -54,4 +54,4 @@ SELECT * FROM (
     #LEFT JOIN UNNEST(line_items.value.properties) AS prop
     WHERE (line_items.value. sku='' OR UPPER(line_items.value. sku) LIKE '%SET' OR UPPER(line_items.value.sku) LIKE '%BUNDLE%' OR UPPER(line_items.value.sku) LIKE '%DUO%') AND line_items.value.properties[SAFE_OFFSET(0)].value.value IS NOT NULL) AS B
 WHERE row_number = 1) 
-ORDER BY line_items__id DESC)
+)

@@ -67,6 +67,5 @@ LEFT JOIN TAXES t ON t.transaction_id = o.shopify_transaction_id
 LEFT JOIN  {{ ref(['stg_first_purchase_',country]|join)}} c ON c.email_hash = o.email_hash and o.ordered_at_utc = c.created_at
 WHERE row_number = 1
 AND test = false
-ORDER BY number ASC
 
 {% endmacro %}
