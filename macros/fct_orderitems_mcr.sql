@@ -11,9 +11,6 @@ WITH line_items_sets AS(
   o.name, 
   li.value.id AS line_item_id,
   li.value.title AS order_item, 
-  li.value.sku AS sku,
-  CASE WHEN (li.value.sku='' OR UPPER(li.value.sku) LIKE '%SET' OR UPPER(li.value.sku) LIKE '%BUNDLE%' OR UPPER(li.value.sku) LIKE '%DUO' OR UPPER(li.value.sku) LIKE '%SET-2021' OR UPPER(li.value.sku) LIKE '%TRIO') AND p.value.value IS NOT NULL THEN 
-  REGEXP_EXTRACT(p.value.value, r"\(SKU: (.*?)\)") ELSE li.value.sku END AS sku_for_rank,
   li.value.quantity AS qty,
   li.value.variant_id AS variant_id,
   "set_item" AS item_type,
@@ -26,15 +23,8 @@ WITH line_items_sets AS(
   source_name
 FROM  leslunes-raw.shopify_{{country}}.`orders` o
 LEFT JOIN UNNEST(line_items) AS li
-LEFT JOIN UNNEST(li.value.properties) p
+LEFT JOIN unnest(li.value.properties) p
 WHERE test = False
-),
-
-line_items_sets_filtered AS (
-  SELECT * FROM (SELECT *,
-row_number() OVER (PARTITION BY name, order_item, sku_for_rank, item_title ORDER BY item_title  ASC) AS name_rank,
-FROM line_items_sets)
-WHERE name_rank = 1 AND row_number = 1
 ),
 
 line_items AS(
@@ -42,7 +32,6 @@ line_items AS(
     row_number() OVER (PARTITION BY li.value.id, li.value.sku ORDER BY updated_at DESC) AS row_number, 
     o.id, 
     li.value.sku, 
-    CASE WHEN (li.value.sku='' OR UPPER(li.value.sku) LIKE '%SET' OR UPPER(li.value.sku) LIKE '%BUNDLE%' OR UPPER(li.value.sku) LIKE '%DUO' OR UPPER(li.value.sku) LIKE '%SET-2021' OR UPPER(li.value.sku) LIKE '%TRIO') AND p.value.value IS NOT NULL THEN REGEXP_EXTRACT(p.value.value, r"\(SKU: (.*?)\)") ELSE li.value.sku END AS sku_for_rank,
     note, 
     name, 
     created_at, 
@@ -65,20 +54,10 @@ line_items AS(
     email,
     tags,
     source_name
-FROM leslunes-raw.shopify_{{country}}.orders o
-LEFT JOIN UNNEST(line_items) AS li
-LEFT JOIN UNNEST(li.value.properties) p
+FROM leslunes-raw.shopify_{{country}}.orders o,
+UNNEST(line_items) AS li
 WHERE test = False
-), 
-
-line_items_filtered AS (
-  SELECT * FROM (SELECT *,
-row_number() OVER (PARTITION BY name, order_item, sku_for_rank, item_title ORDER BY item_title  ASC) AS name_rank,
-FROM line_items)
-WHERE name_rank = 1 AND row_number = 1
-),
-
-tax AS (
+), tax AS (
   SELECT DISTINCT 
     id AS shopify_transaction_id ,tx.value.rate AS tax_rate, 
   FROM leslunes-raw.shopify_{{country}}.orders,
@@ -158,7 +137,11 @@ final AS(
    item_type,
    tags,
    source_name
-FROM line_items_sets_filtered i
+FROM line_items_sets i
+
+WHERE 
+  row_number = 1
+  AND item_title not in("ll_fg", "ll_hash","ll_min_total", "_ll_coupon_info")
   
 UNION ALL
 
@@ -183,8 +166,11 @@ SELECT
   item_type, 
   tags,
   source_name
-FROM line_items_filtered li) 
-, first_purchase_date AS(
+FROM line_items li 
+WHERE 
+  row_number = 1
+  AND order_item not in("ll_fg", "ll_hash","ll_min_total", "_ll_coupon_info")
+), first_purchase_date AS(
 
 SELECT DISTINCT
   TO_BASE64(MD5(UPPER(email))) AS email_hash,
@@ -245,7 +231,6 @@ LEFT JOIN discounts d ON  d.transaction_id  = f.shopify_transaction_id and LID =
 LEFT JOIN tax t ON f.shopify_transaction_id = t.shopify_transaction_id
 LEFT JOIN shipping s ON s.shopify_transaction_id = f.shopify_transaction_id
 LEFT JOIN  first_purchase_date c ON c.email_hash = TO_BASE64(MD5(UPPER(f.email)))
-WHERE item_title NOT LIKE '%_customerReferenceId' 
-AND item_title NOT LIKE '_ll%' AND item_title not in("ll_fg", "ll_hash","ll_min_total") 
+ORDER BY f.shopify_transaction_id
 
 {% endmacro %}
