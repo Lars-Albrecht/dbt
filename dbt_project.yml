@@ -99,6 +99,8 @@ models:
           schema: 'zendesk'
         zenfulfillment:
           schema: 'zenfulfillment'
+        tiktok:
+          schema: 'tiktok'
       core:
         schema: 'core'
         database: 'leslunes-prep'
